@@ -3,6 +3,8 @@
 
 import PackageDescription
 
+private let features: [PackageDescription.Target.Dependency] = ["FindFeature", "GroupFeature", "SettingsFeature"]
+
 let package = Package(
     name: "HashtagCatcherPackage",
     products: [
@@ -19,10 +21,25 @@ let package = Package(
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "ProductionApp",
-            path: "./Sources/Apps/Production"),
+            dependencies: features,
+            path: "./Sources/Apps/Production"
+        ),
         .target(
             name: "StagingApp",
-            path: "./Sources/Apps/Staging"),
-
+            dependencies: features,
+            path: "./Sources/Apps/Staging"
+        ),
+        .target(
+            name: "FindFeature",
+            path: "./Sources/Features/Find"
+        ),
+        .target(
+            name: "GroupFeature",
+            path: "./Sources/Features/Group"
+        ),
+        .target(
+            name: "SettingsFeature",
+            path: "./Sources/Features/Settings"
+        )
     ]
 )
