@@ -12,7 +12,7 @@ import StagingApp
 struct StagingApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            StagingRootView()
         }
     }
 }

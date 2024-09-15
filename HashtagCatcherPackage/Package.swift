@@ -11,6 +11,9 @@ private let features: [PackageDescription.Target.Dependency] = ["FindFeature", "
 
 let package = Package(
     name: "HashtagCatcherPackage",
+    platforms: [
+        .iOS(.v17)
+    ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
