@@ -17,15 +17,13 @@ package struct SettingsView: View {
     package init() { }
 
     package var body: some View {
-        ZStack(alignment: .bottom) {
-            Color(UIColor.background)
-                .edgesIgnoringSafeArea(.all)
+        NavigationStack {
             VStack {
                 List {
                     #if DEBUG
-                        HStack {
-                            Text("Debug version")
-                        }
+                    HStack {
+                        Text("Debug version")
+                    }
                     #endif
                     HStack {
                         Text("バージョン")
@@ -43,7 +41,7 @@ package struct SettingsView: View {
                     }
                 }
             }
-            .navigationBarTitle("設定")
+            .navigationTitle("設定")
             .navigationBarTitleDisplayMode(.inline)
         }
     }

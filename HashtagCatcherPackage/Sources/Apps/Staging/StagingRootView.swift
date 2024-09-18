@@ -11,24 +11,31 @@ import GroupFeature
 import SettingsFeature
 
 public struct StagingRootView: View {
-    public init() {
- 
-    }
+
+    @State private var selection = 2
+
+    public init() {}
 
     public var body: some View {
-        TabView {
+        TabView(selection: $selection) {
             FindView()
                 .tabItem {
                     Label("Find", systemImage: "magnifyingglass")
                 }
+                .tag(1)
             GroupView()
                 .tabItem {
                     Label("Group", systemImage: "person.3")
                 }
+                .tag(2)    
             SettingsView()
                 .tabItem {
                     Label("Settings", systemImage: "gear")
                 }
+                .tag(3)
         }
     }
+}
+#Preview {
+    StagingRootView()
 }
