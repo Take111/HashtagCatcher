@@ -7,16 +7,13 @@
 
 import Foundation
 import UseCases
+import Dependencies
 
 final class SettingsViewModel: ObservableObject {
 
-    private let useCase: StoreReviewUseCase
+    @Dependency(\.storeReviewUseCase) private var storeReviewUseCase
 
-    init(useCase: StoreReviewUseCase = StoreReviewUseCaseImpl()) {
-        self.useCase = useCase
-    }
-    
     func didTappedReview() {
-        useCase.moveAppStoreReview()
+        storeReviewUseCase.moveAppStoreReview()
     }
 }
