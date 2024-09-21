@@ -12,7 +12,7 @@ import Repositories
 
 package struct HashTagGroupUseCase {
     package var createHashTagGroup: (_ group: HashTagGroupDoc) -> Void
-    package var createHashTagGroups: () -> [HashTagGroupDoc]
+    package var fetchHashTagGroups: () -> [HashTagGroupDoc]
     package var deleteHashTagGroup: (_ group: HashTagGroupDoc) throws -> Void
 }
 
@@ -23,7 +23,7 @@ extension HashTagGroupUseCase: DependencyKey {
             createHashTagGroup: { group in
                 realmRepository.write(object: group)
             },
-            createHashTagGroups: {
+            fetchHashTagGroups: {
                 realmRepository.readAll()
             },
             deleteHashTagGroup: { group in

@@ -12,14 +12,33 @@ package struct GroupView: View {
 
     @State private var isPresentedEditView = false
 
-    package init() {}
+    @StateObject var viewModel = GroupViewModel()
+
+    package init() { }
 
     package var body: some View {
         NavigationStack {
-            VStack(alignment: .center) {
-                Spacer()
-                Text("右上のボタンから、グループを作成しよう")
-                    .font(.callout)
+            if !viewModel.groups.isEmpty {
+                ZStack(alignment: .bottom) {
+                    List {
+                        ForEach(viewModel.groups, id: \.self) { group in
+                            HStack {
+                                Text(group.name)
+                                NavigationLink(
+                                    destination:
+                                        GroupEditView(),
+                                    label: {
+                                        Text("")
+                                    }
+                                )
+                            }
+                            .frame(height: 48)
+                        }
+                        .onDelete(perform: { indexSet in
+                            guard let row = indexSet.first else { return }
+                            viewModel.deleteGroup(viewModel.groups[row])
+                        })
+                    }
                     .toolbar(content: {
                         ToolbarItemGroup(placement: .navigationBarLeading) {
                             EditButton()
@@ -33,19 +52,38 @@ package struct GroupView: View {
                         }
                     })
                     .navigationBarTitleDisplayMode(.inline)
-                    .fullScreenCover(isPresented: $isPresentedEditView, content: {
-                        GroupCreateView(/*viewModel.init()*/)
-                        //                            .onDisappear {
-                        ////                                viewModel.onAppear()
-                        //                            }
-                    })
-                    .onAppear {
-                        //                        viewModel.setUseCase(useCase)
-                        //                        viewModel.onAppear()
-                    }
-                Spacer()
+                }
+            } else {
+                VStack(alignment: .center) {
+                    Spacer()
+                    Text("右上のボタンから、グループを作成しよう")
+                        .font(.callout)
+                        .toolbar(content: {
+                            ToolbarItemGroup(placement: .navigationBarLeading) {
+                                EditButton()
+                            }
+                            ToolbarItemGroup(placement: .navigationBarTrailing) {
+                                Button(action: {
+                                    isPresentedEditView.toggle()
+                                }, label: {
+                                    Image(systemName: "plus")
+                                })
+                            }
+                        })
+                        .navigationBarTitleDisplayMode(.inline)
+                    Spacer()
+                }
             }
         }
+        .onAppear {
+            viewModel.onAppear()
+        }
+        .fullScreenCover(isPresented: $isPresentedEditView, content: {
+            GroupCreateView(onCreateGroup: {
+                viewModel.onAppear()
+            } )
+
+        })
     }
 }
 

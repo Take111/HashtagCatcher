@@ -17,6 +17,12 @@ struct GroupCreateView: View {
 
     @StateObject var viewModel: GroupCreateViewModel = GroupCreateViewModel()
 
+    private let onCreateGroup: () -> Void
+
+    init(onCreateGroup: @escaping () -> Void) {
+        self.onCreateGroup = onCreateGroup
+    }
+
     var body: some View {
         NavigationView {
             ScrollView {
@@ -36,6 +42,7 @@ struct GroupCreateView: View {
                     MainButton(title: "保存する") {
                         viewModel.onTapSaveButton(groupName: groupName, hashTags: hashTags)
                         isShowCompleteAlert.toggle()
+                        onCreateGroup()
                     }
                     .alert(isPresented: $isShowCompleteAlert) {
                         Alert(title: Text("保存が完了しました"),
@@ -63,5 +70,5 @@ struct GroupCreateView: View {
 }
 
 #Preview {
-    GroupCreateView()
+    GroupCreateView(onCreateGroup: {})
 }
