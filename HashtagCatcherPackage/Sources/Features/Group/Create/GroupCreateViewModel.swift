@@ -7,7 +7,16 @@
 
 import Foundation
 import Combine
+import Dependencies
+import UseCases
+import Models
 
 final class GroupCreateViewModel: ObservableObject {
 
+    @Dependency(\.hashTagGroupUseCase) private var useCase
+
+    func onTapSaveButton(groupName: String, hashTags: String) {
+        let group = HashTagGroupDoc(name: groupName, tags: hashTags, createdAt: Date())
+        useCase.createHashTagGroup(group)
+    }
 }

@@ -19,7 +19,7 @@ package final class HashTagGroupDoc: Object, Identifiable {
         return "id"
     }
 
-    convenience init(name: String, tags: String, createdAt: Date?, updatedAt: Date? = nil) {
+    convenience package init(name: String, tags: String, createdAt: Date?, updatedAt: Date? = nil) {
         self.init()
         self.name = name
         self.tags = tags

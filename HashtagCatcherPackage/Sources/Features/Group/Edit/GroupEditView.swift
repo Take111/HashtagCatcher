@@ -15,7 +15,7 @@ struct GroupEditView: View {
 
     @Environment(\.presentationMode) private var presentationMode
 
-    //    @EnvironmentObject var useCase: RealmUseCaseImpl
+    //    @EnvironmentObject var useCase: HashTagGroupUseCaseImpl
     //    @EnvironmentObject var toastStore: ToastViewStore
 
     @StateObject var viewModel: GroupEditViewModel = GroupEditViewModel()

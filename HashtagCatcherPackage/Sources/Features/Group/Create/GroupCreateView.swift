@@ -10,7 +10,7 @@ import UIComponents
 
 struct GroupCreateView: View {
     @State private var groupName = ""
-    @State private var hashtags = ""
+    @State private var hashTags = ""
     @State private var isShowCompleteAlert = false
 
     @Environment(\.presentationMode) private var presentationMode
@@ -29,12 +29,12 @@ struct GroupCreateView: View {
                             .stroke(Color.gray))
                     Text("ハッシュタグ")
                         .font(.bold(.body)())
-                    TextEditor(text: $hashtags)
+                    TextEditor(text: $hashTags)
                         .frame(width: 300, height: 200)
                         .overlay(RoundedRectangle(cornerRadius: 8.0)
                             .stroke(Color.gray))
                     MainButton(title: "保存する") {
-//                        viewModel.createGroup(name: groupName, hashtag: hashtags)
+                        viewModel.onTapSaveButton(groupName: groupName, hashTags: hashTags)
                         isShowCompleteAlert.toggle()
                     }
                     .alert(isPresented: $isShowCompleteAlert) {
@@ -43,9 +43,6 @@ struct GroupCreateView: View {
                                   presentationMode.wrappedValue.dismiss()
                               }))
                     }
-                }
-                .onAppear {
-//                    viewModel.setUseCase(useCase)
                 }
                 .toolbar(content: {
                     ToolbarItemGroup(placement: .navigationBarLeading) {
