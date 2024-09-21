@@ -10,7 +10,7 @@ import Dependencies
 import UIKit
 
 package struct PasteBoardUseCase {
-    var pastText: (_ text: String) -> Void
+    package var pastText: (_ text: String) -> Void
 }
 
 extension PasteBoardUseCase: DependencyKey {

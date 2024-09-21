@@ -26,7 +26,7 @@ package struct GroupView: View {
                                 Text(group.name)
                                 NavigationLink(
                                     destination:
-                                        GroupEditView(),
+                                        GroupEditView(group: group),
                                     label: {
                                         Text("")
                                     }
