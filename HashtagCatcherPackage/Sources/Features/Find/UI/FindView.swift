@@ -22,7 +22,7 @@ package struct FindView: View {
             ZStack(alignment: .bottom) {
                 VStack {
                     List {
-                        ForEach(0 ..< viewModel.types.count) { num in
+                        ForEach(0 ..< viewModel.types.count, id: \.self) { num in
                             HStack {
                                 Text(viewModel.types[num].rawValue)
                                 NavigationLink(

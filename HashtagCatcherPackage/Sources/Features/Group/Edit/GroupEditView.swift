@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import UIComponents
+import Models
 
 struct GroupEditView: View {
     @State private var groupName = ""
@@ -15,10 +17,11 @@ struct GroupEditView: View {
 
     @Environment(\.presentationMode) private var presentationMode
 
-    //    @EnvironmentObject var useCase: RealmUseCaseImpl
-    //    @EnvironmentObject var toastStore: ToastViewStore
+    @StateObject var viewModel: GroupEditViewModel
 
-    @StateObject var viewModel: GroupEditViewModel = GroupEditViewModel()
+    init(group: HashTagGroupDoc) {
+        _viewModel = StateObject(wrappedValue: GroupEditViewModel(group: group))
+    }
 
     var body: some View {
         ScrollView {
@@ -36,13 +39,14 @@ struct GroupEditView: View {
                     .overlay(RoundedRectangle(cornerRadius: 8.0)
                         .stroke(Color.gray))
                 VStack(spacing: 24) {
-                    //                    MainButton(title: "コピーする") {
-                    //                        viewModel.didTappedPasteButton()
-                    //                        isShowToast.toggle()
-                    //                    }
-                    //                    SemiMainButton(title: "変更する") {
-                    //                        viewModel.didTappedEditButton()
-//                    isShowCompleteAlert.toggle()
+                    MainButton(title: "コピーする") {
+                        viewModel.onTapPasteButton()
+                        isShowToast.toggle()
+                    }
+                    SemiMainButton(title: "変更する") {
+                        viewModel.onTapEditButton()
+                        isShowCompleteAlert.toggle()
+                    }
                 }
                 .alert(isPresented: $isShowCompleteAlert, content: {
                     Alert(title: Text("変更が完了しました"),
@@ -54,14 +58,11 @@ struct GroupEditView: View {
                 })
             }
         }
-        .onAppear {
-            //                viewModel.configure(useCase: useCase, store: toastStore)
-        }
         .padding()
     }
 }
 
 
 #Preview {
-    GroupEditView()
+    GroupEditView(group: HashTagGroupDoc(name: "", tags: "", createdAt: nil))
 }
