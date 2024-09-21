@@ -15,7 +15,7 @@ package struct StoreReviewUseCase {
 }
 
 extension StoreReviewUseCase: DependencyKey {
-    package static let liveValue = StoreReviewUseCase(
+    package static let liveValue = Self(
         showStoreReview: { 
             // 基準日時からの秒数を表示する
             let now = Int(Date.timeIntervalSinceReferenceDate)

@@ -7,8 +7,20 @@
 
 import Foundation
 import RealmSwift
+import Dependencies
 
-protocol RealmRepository {
+package struct RealmRepositoryKey: DependencyKey {
+    package static let liveValue: RealmRepository = RealmRepositoryImpl()
+}
+
+package extension DependencyValues {
+    var realmRepository: RealmRepository {
+        get { self[RealmRepositoryKey.self] }
+        set { self[RealmRepositoryKey.self] = newValue }
+    }
+}
+
+package protocol RealmRepository {
     func write(object: Object)
     func readAll<T: Object>() -> [T]
     func delete<T: Object>(object: T) throws
