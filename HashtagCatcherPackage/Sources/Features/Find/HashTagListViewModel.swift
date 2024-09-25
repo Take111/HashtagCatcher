@@ -6,20 +6,24 @@
 //
 
 import Foundation
+import UseCases
+import Dependencies
 
 final class HashTagListViewModel: ObservableObject {
     @Published var hashTagType: HashTagType
     @Published var hashTags: [HashTag] = []
+
+    @Dependency(\.pasteBoardUseCase) private var pasteBoardUseCase: PasteBoardUseCase
 
     init(hashTagType: HashTagType) {
         self.hashTagType = hashTagType
     }
 
     func onApper() {
-        if hashTagType == .popular {
-     //       bind()
-        } else {
-            hashTags = hashTagType.hastTags.map { $0 }
-        }
+        hashTags = hashTagType.hastTags.map { $0 }
+    }
+
+    func didSelectHashTag(_ hashTag: HashTag) {
+        pasteBoardUseCase.pastText(hashTag.title)
     }
 }

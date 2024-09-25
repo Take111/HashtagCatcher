@@ -20,20 +20,21 @@ public struct StagingRootView: View {
         TabView(selection: $selection) {
             FindView()
                 .tabItem {
-                    Label("Find", systemImage: "magnifyingglass")
+                    Label("探す", systemImage: "magnifyingglass")
                 }
                 .tag(1)
             GroupView()
                 .tabItem {
-                    Label("Group", systemImage: "person.3")
+                    Label("グループ", systemImage: "person.3")
                 }
                 .tag(2)    
             SettingsView()
                 .tabItem {
-                    Label("Settings", systemImage: "gear")
+                    Label("設定", systemImage: "gear")
                 }
                 .tag(3)
         }
+        .accentColor(Color(UIColor.primary))
     }
 }
 #Preview {
