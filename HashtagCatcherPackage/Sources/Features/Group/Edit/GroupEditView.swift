@@ -8,6 +8,7 @@
 import SwiftUI
 import UIComponents
 import Models
+import AlertToast
 
 struct GroupEditView: View {
     @State private var groupName = ""
@@ -59,6 +60,9 @@ struct GroupEditView: View {
             }
         }
         .padding()
+        .toast(isPresenting: $isShowToast) {
+            AlertToast(displayMode: .hud, type: .regular, title: "コピーしました")
+        }
     }
 }
 

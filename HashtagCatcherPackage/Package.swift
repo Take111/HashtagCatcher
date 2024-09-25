@@ -6,6 +6,7 @@ import PackageDescription
 private extension PackageDescription.Target.Dependency {
     static let realm: Self = .product(name: "RealmSwift", package: "realm-swift")
     static let swiftDependencies: Self = .product(name: "Dependencies", package: "swift-dependencies")
+    static let alertToast: Self = .product(name: "AlertToast", package: "AlertToast")
 }
 
 private let features: [PackageDescription.Target.Dependency] = ["FindFeature", "GroupFeature", "SettingsFeature"]
@@ -27,7 +28,8 @@ let package = Package(
     dependencies: [
         //　本当は20.0.0を使いたいが、うまく入らない
         .package(url: "https://github.com/realm/realm-swift.git", from: "10.53.1"),
-        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.4.0")
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.4.0"),
+        .package(url: "https://github.com/elai950/AlertToast.git", branch: "master")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -59,6 +61,7 @@ let package = Package(
         ),
         .target(
             name: "UIComponents",
+            dependencies: [.alertToast],
             path: "./Sources/Core/UIComponents"
         ),
         .target(
