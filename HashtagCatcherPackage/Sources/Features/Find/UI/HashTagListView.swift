@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import AlertToast
 
 struct HashTagListView: View {
 
     @StateObject var viewModel: HashTagListViewModel
+    @State private var isShowToast = false
 
     init(hashTagType: HashTagType) {
         _viewModel = StateObject(wrappedValue: HashTagListViewModel(hashTagType: hashTagType))
@@ -19,7 +21,8 @@ struct HashTagListView: View {
             ForEach(viewModel.hashTags, id: \.udid) { hashTag in
                 HStack {
                     Button(action: {
-//                        viewModel.didSelectHashTag(hashTag)
+                        viewModel.didSelectHashTag(hashTag)
+                        isShowToast.toggle()
                     }, label: {
                         Text(hashTag.title)
                     })
@@ -30,10 +33,12 @@ struct HashTagListView: View {
         .onAppear {
             viewModel.onApper()
         }
+        .toast(isPresenting: $isShowToast) {
+            AlertToast(displayMode: .hud, type: .regular, title: "コピーしました")
+        }
     }
 }
 
 #Preview {
     HashTagListView(hashTagType: .fashion)
-        .previewLayout(PreviewLayout.sizeThatFits)
 }
