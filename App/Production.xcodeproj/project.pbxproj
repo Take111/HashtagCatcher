@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6F3B9D562CA4E6B00044F87B /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 6F3B9D552CA4E6B00044F87B /* PrivacyInfo.xcprivacy */; };
 		6F9608E32C8FEA3B00D72C37 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6F9608DB2C8FEA3B00D72C37 /* Preview Assets.xcassets */; };
 		6F9608E42C8FEA3B00D72C37 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6F9608DD2C8FEA3B00D72C37 /* Assets.xcassets */; };
 		6F9608E52C8FEA3B00D72C37 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9608DE2C8FEA3B00D72C37 /* ContentView.swift */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6F3B9D552CA4E6B00044F87B /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		6F9608A72C8FE64200D72C37 /* Production.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Production.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F9608DB2C8FEA3B00D72C37 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		6F9608DD2C8FEA3B00D72C37 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -67,6 +69,7 @@
 				6F9608DD2C8FEA3B00D72C37 /* Assets.xcassets */,
 				6F9608DE2C8FEA3B00D72C37 /* ContentView.swift */,
 				6F9608DF2C8FEA3B00D72C37 /* Production.entitlements */,
+				6F3B9D552CA4E6B00044F87B /* PrivacyInfo.xcprivacy */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -149,6 +152,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F3B9D562CA4E6B00044F87B /* PrivacyInfo.xcprivacy in Resources */,
 				6F9608E42C8FEA3B00D72C37 /* Assets.xcassets in Resources */,
 				6F9608E32C8FEA3B00D72C37 /* Preview Assets.xcassets in Resources */,
 			);

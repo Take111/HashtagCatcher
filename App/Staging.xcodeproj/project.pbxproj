@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6F3B9D582CA4E6C60044F87B /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 6F3B9D572CA4E6C60044F87B /* PrivacyInfo.xcprivacy */; };
 		6F9608EF2C8FEA5E00D72C37 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6F9608E72C8FEA5E00D72C37 /* Preview Assets.xcassets */; };
 		6F9608F02C8FEA5E00D72C37 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6F9608E92C8FEA5E00D72C37 /* Assets.xcassets */; };
 		6F9608F12C8FEA5E00D72C37 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9608EA2C8FEA5E00D72C37 /* ContentView.swift */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6F3B9D572CA4E6C60044F87B /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		6F9608702C8FE62D00D72C37 /* Staging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Staging.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F9608E72C8FEA5E00D72C37 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		6F9608E92C8FEA5E00D72C37 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -67,6 +69,7 @@
 				6F9608E92C8FEA5E00D72C37 /* Assets.xcassets */,
 				6F9608EA2C8FEA5E00D72C37 /* ContentView.swift */,
 				6F9608EB2C8FEA5E00D72C37 /* Staging.entitlements */,
+				6F3B9D572CA4E6C60044F87B /* PrivacyInfo.xcprivacy */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -149,6 +152,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F3B9D582CA4E6C60044F87B /* PrivacyInfo.xcprivacy in Resources */,
 				6F9608F02C8FEA5E00D72C37 /* Assets.xcassets in Resources */,
 				6F9608EF2C8FEA5E00D72C37 /* Preview Assets.xcassets in Resources */,
 			);
