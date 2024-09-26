@@ -16,7 +16,7 @@ AppStore is available [here](https://apps.apple.com/jp/app/%E3%83%8F%E3%83%83%E3
 
 ## Architecture
 
-<img src="https://github.com/user-attachments/assets/72c9aeb0-2656-480d-b0cc-672c061d55a1" alt="Architecture" width="800">
+<img src="https://github.com/user-attachments/assets/4675561e-4d16-489b-9b3d-cf027a11533d" alt="Architecture" width="800">
 
 ## Requirement
 
