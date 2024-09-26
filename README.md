@@ -12,7 +12,7 @@ AppStore is available [here](https://apps.apple.com/jp/app/%E3%83%8F%E3%83%83%E3
 
 | Find | Group | Settings |
 |:---:|:---:|:---:|
-| <image src="https://github.com/user-attachments/assets/bd6017d1-efc1-4f55-81b3-80e5bdf6a37a" alt="Find"> | <image src="https://github.com/user-attachments/assets/0c991d28-46d3-45c3-b28f-08d122318636" alt="Group"> | <image src="https://github.com/user-attachments/assets/814e86ef-c216-4fe3-b6dd-302db59dd5a5" alt="Settings"> |
+| <image src="https://github.com/user-attachments/assets/bd6017d1-efc1-4f55-81b3-80e5bdf6a37a" alt="Find" width="200"> | <image src="https://github.com/user-attachments/assets/0c991d28-46d3-45c3-b28f-08d122318636" alt="Group" width="200"> | <image src="https://github.com/user-attachments/assets/814e86ef-c216-4fe3-b6dd-302db59dd5a5" alt="Settings" width="200"> |
 
 ## Requirement
 
