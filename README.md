@@ -14,6 +14,10 @@ AppStore is available [here](https://apps.apple.com/jp/app/%E3%83%8F%E3%83%83%E3
 |:---:|:---:|:---:|
 | <image src="https://github.com/user-attachments/assets/bd6017d1-efc1-4f55-81b3-80e5bdf6a37a" alt="Find" width="200"> | <image src="https://github.com/user-attachments/assets/0c991d28-46d3-45c3-b28f-08d122318636" alt="Group" width="200"> | <image src="https://github.com/user-attachments/assets/814e86ef-c216-4fe3-b6dd-302db59dd5a5" alt="Settings" width="200"> |
 
+## Architecture
+
+<img src="https://github.com/user-attachments/assets/72c9aeb0-2656-480d-b0cc-672c061d55a1" alt="Architecture" width="800">
+
 ## Requirement
 
 - Xcode 15.0 or later
