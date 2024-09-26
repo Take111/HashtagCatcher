@@ -34,6 +34,7 @@ public struct ProductionRootView: View {
                 }
                 .tag(3)
         }
+        .accentColor(Color(UIColor.primary))
     }
 }
 #Preview {
