@@ -27,8 +27,12 @@ final class GroupViewModel: ObservableObject {
     }
 
     func deleteGroup(_ group: HashTagGroupDoc) {
-        try? useCase.deleteHashTagGroup(group)
-        fetchGroups()
+        do {
+            try useCase.deleteHashTagGroup(group)
+            fetchGroups()
+        } catch {
+            print("Failed to delete group: \(error)")
+        }
     }
 
     private func fetchGroups() {

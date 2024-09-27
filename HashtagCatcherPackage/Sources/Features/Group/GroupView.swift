@@ -19,40 +19,38 @@ package struct GroupView: View {
     package var body: some View {
         NavigationStack {
             if !viewModel.groups.isEmpty {
-                ZStack(alignment: .bottom) {
-                    List {
-                        ForEach(viewModel.groups, id: \.self) { group in
-                            HStack {
-                                Text(group.name)
-                                NavigationLink(
-                                    destination:
-                                        GroupEditView(group: group),
-                                    label: {
-                                        Text("")
-                                    }
-                                )
-                            }
-                            .frame(height: 48)
+                List {
+                    ForEach(viewModel.groups, id: \.id) { group in
+                        HStack {
+                            Text(group.name)
+                            NavigationLink(
+                                destination:
+                                    GroupEditView(group: group),
+                                label: {
+                                    Text("")
+                                }
+                            )
                         }
-                        .onDelete(perform: { indexSet in
-                            guard let row = indexSet.first else { return }
-                            viewModel.deleteGroup(viewModel.groups[row])
+                        .frame(height: 48)
+                    }
+                    .onDelete(perform: { indexSet in
+                        guard let row = indexSet.first else { return }
+                        viewModel.deleteGroup(viewModel.groups[row])
+                    })
+                }
+                .toolbar(content: {
+                    ToolbarItemGroup(placement: .navigationBarLeading) {
+                        EditButton()
+                    }
+                    ToolbarItemGroup(placement: .navigationBarTrailing) {
+                        Button(action: {
+                            isPresentedEditView.toggle()
+                        }, label: {
+                            Image(systemName: "plus")
                         })
                     }
-                    .toolbar(content: {
-                        ToolbarItemGroup(placement: .navigationBarLeading) {
-                            EditButton()
-                        }
-                        ToolbarItemGroup(placement: .navigationBarTrailing) {
-                            Button(action: {
-                                isPresentedEditView.toggle()
-                            }, label: {
-                                Image(systemName: "plus")
-                            })
-                        }
-                    })
-                    .navigationBarTitleDisplayMode(.inline)
-                }
+                })
+                .navigationBarTitleDisplayMode(.inline)
             } else {
                 VStack(alignment: .center) {
                     Spacer()

@@ -36,20 +36,8 @@ package struct FindView: View {
                         }
                     }
                 }
-                .toolbar(content: {
-                    ToolbarItemGroup {
-                        Button(action: {
-                            isPresentedCilpboard.toggle()
-                        }, label: {
-                            Image(systemName: "star")
-                        })
-                    }
-                })
                 .navigationBarTitleDisplayMode(.inline)
                 .background(Color(UIColor.background))
-                .fullScreenCover(isPresented: $isPresentedCilpboard) {
-                    //                ClipboardView(viewModel: .init(store: store))
-                }
             }
         }
     }
