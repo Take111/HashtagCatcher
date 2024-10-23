@@ -25,12 +25,12 @@ public struct ProductionRootView: View {
                 .tag(1)
             GroupView()
                 .tabItem {
-                    Label("グループ", systemImage: "person.3")
+                    Label("グループ", systemImage: "folder")
                 }
                 .tag(2)
             SettingsView()
                 .tabItem {
-                    Label("設定", systemImage: "gear")
+                    Label("設定", systemImage: "gearshape")
                 }
                 .tag(3)
         }
