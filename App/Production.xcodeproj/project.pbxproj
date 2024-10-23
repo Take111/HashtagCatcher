@@ -294,7 +294,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = HashtagCatcher/Production/Resources/Production.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"HashtagCatcher/Production/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = DQ6L6A5H88;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -334,7 +334,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = HashtagCatcher/Production/Resources/Production.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"HashtagCatcher/Production/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = DQ6L6A5H88;
 				ENABLE_HARDENED_RUNTIME = YES;
