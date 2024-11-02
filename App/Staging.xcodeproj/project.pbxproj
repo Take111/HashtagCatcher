@@ -16,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6F108BA72CD6F09900626AA7 /* Staging-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Staging-Info.plist"; sourceTree = SOURCE_ROOT; };
 		6F3B9D572CA4E6C60044F87B /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		6F9608702C8FE62D00D72C37 /* Staging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Staging.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F9608E72C8FEA5E00D72C37 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -77,6 +78,7 @@
 		6F9608EE2C8FEA5E00D72C37 /* Staging */ = {
 			isa = PBXGroup;
 			children = (
+				6F108BA72CD6F09900626AA7 /* Staging-Info.plist */,
 				6F9608EC2C8FEA5E00D72C37 /* Resources */,
 				6F9608ED2C8FEA5E00D72C37 /* StagingApp.swift */,
 			);
@@ -300,7 +302,9 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Staging-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "ハッシュタグ管理手帳.debug- ワンタップでハッシュタグを管理 -";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "「許可」するとお客様に最適化された広告が表示されます";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -340,7 +344,9 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Staging-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "ハッシュタグ管理手帳.debug- ワンタップでハッシュタグを管理 -";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "「許可」するとお客様に最適化された広告が表示されます";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
