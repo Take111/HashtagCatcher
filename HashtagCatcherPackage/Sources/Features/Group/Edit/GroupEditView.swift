@@ -35,7 +35,7 @@ struct GroupEditView: View {
                     isShowCompleteAlert.toggle()
                 }
                 .alert(Text("変更が完了しました", bundle: .module), isPresented: $isShowCompleteAlert) {
-                    Button("OK") {
+                    Button(String(localized: "OK", bundle: .module)) {
                         dismiss()
                     }
                 }

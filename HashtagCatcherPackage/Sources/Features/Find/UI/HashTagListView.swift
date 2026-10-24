@@ -40,7 +40,7 @@ struct HashTagListView: View {
         .navigationTitle(viewModel.hashTagType.rawValue)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Button(editMode.isEditing ? String(localized: "キャンセル", bundle: .module) : String(localized: "選択", bundle: .module)) {
+                Button(String(localized: editMode.isEditing ? "キャンセル" : "選択", bundle: .module)) {
                     setSelecting(!editMode.isEditing)
                 }
             }

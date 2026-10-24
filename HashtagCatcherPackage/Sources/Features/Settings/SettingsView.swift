@@ -20,7 +20,7 @@ package struct SettingsView: View {
         NavigationStack {
             List {
                 #if DEBUG
-                Text("Debug version")
+                Text(verbatim: "Debug version")
                 #endif
                 HStack {
                     Text("バージョン", bundle: .module)

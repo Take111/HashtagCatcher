@@ -35,7 +35,7 @@ struct GroupCreateView: View {
                         onCreateGroup()
                     }
                     .alert(Text("保存が完了しました", bundle: .module), isPresented: $isShowCompleteAlert) {
-                        Button("OK") {
+                        Button(String(localized: "OK", bundle: .module)) {
                             dismiss()
                         }
                     }
