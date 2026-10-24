@@ -19,11 +19,7 @@ final class GroupViewModel {
     private(set) var groups = [HashTagGroupDoc]()
 
     func onAppear() {
-        groups = []
-        fetchGroups()
-    }
-
-    func clearAndFetchGroup() {
+        // Realm objects compare equal by primary key, so clear first to publish in-place edits.
         groups = []
         fetchGroups()
     }

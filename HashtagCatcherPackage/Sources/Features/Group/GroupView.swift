@@ -20,7 +20,14 @@ package struct GroupView: View {
     package var body: some View {
         NavigationStack {
             Group {
-                if !viewModel.groups.isEmpty {
+                if viewModel.groups.isEmpty {
+                    VStack {
+                        Spacer()
+                        Text("右上のボタンから、グループを作成しよう")
+                            .font(.callout)
+                        Spacer()
+                    }
+                } else {
                     List {
                         ForEach(viewModel.groups) { group in
                             NavigationLink(group.name, value: group)
@@ -30,13 +37,6 @@ package struct GroupView: View {
                             guard let row = indexSet.first else { return }
                             viewModel.deleteGroup(viewModel.groups[row])
                         }
-                    }
-                } else {
-                    VStack(alignment: .center) {
-                        Spacer()
-                        Text("右上のボタンから、グループを作成しよう")
-                            .font(.callout)
-                        Spacer()
                     }
                 }
             }
@@ -54,13 +54,12 @@ package struct GroupView: View {
             }
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: HashTagGroupDoc.self) { group in
-                GroupEditView(group: group, onUpdateGroup: {
-                    viewModel.onAppear()
-                })
+                GroupEditView(group: group)
             }
-        }
-        .onAppear {
-            viewModel.onAppear()
+            // Inside the stack so returning from the edit screen reloads renamed groups.
+            .onAppear {
+                viewModel.onAppear()
+            }
         }
         .fullScreenCover(isPresented: $isPresentedEditView) {
             GroupCreateView(onCreateGroup: {

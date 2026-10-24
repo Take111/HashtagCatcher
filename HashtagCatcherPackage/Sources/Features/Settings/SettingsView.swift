@@ -25,7 +25,7 @@ package struct SettingsView: View {
                 HStack {
                     Text("バージョン")
                     Spacer()
-                    Text("\(version ?? "1.0.0")")
+                    Text(version ?? "1.0.0")
                 }
                 Button {
                     viewModel.didTappedReview()

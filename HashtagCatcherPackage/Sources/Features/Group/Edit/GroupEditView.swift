@@ -18,38 +18,21 @@ struct GroupEditView: View {
 
     @State private var viewModel: GroupEditViewModel
 
-    private let onUpdateGroup: () -> Void
-
-    init(group: HashTagGroupDoc, onUpdateGroup: @escaping () -> Void) {
+    init(group: HashTagGroupDoc) {
         _viewModel = State(initialValue: GroupEditViewModel(group: group))
-        self.onUpdateGroup = onUpdateGroup
     }
 
     var body: some View {
         ScrollView {
             VStack(spacing: 24) {
-                Text("グループ名")
-                    .font(.body.bold())
-                TextField("", text: $viewModel.groupName)
-                    .frame(width: 300, height: 32)
-                    .overlay(RoundedRectangle(cornerRadius: 8.0)
-                        .stroke(Color.gray))
-                Text("ハッシュタグ")
-                    .font(.body.bold())
-                TextEditor(text: $viewModel.hashtags)
-                    .frame(width: 300, height: 200)
-                    .overlay(RoundedRectangle(cornerRadius: 8.0)
-                        .stroke(Color.gray))
-                VStack(spacing: 24) {
-                    MainButton(title: "コピーする") {
-                        viewModel.onTapPasteButton()
-                        isShowToast.toggle()
-                    }
-                    SemiMainButton(title: "変更する") {
-                        viewModel.onTapEditButton()
-                        onUpdateGroup()
-                        isShowCompleteAlert.toggle()
-                    }
+                GroupFormFields(groupName: $viewModel.groupName, hashtags: $viewModel.hashtags)
+                MainButton(title: "コピーする") {
+                    viewModel.onTapPasteButton()
+                    isShowToast.toggle()
+                }
+                SemiMainButton(title: "変更する") {
+                    viewModel.onTapEditButton()
+                    isShowCompleteAlert.toggle()
                 }
                 .alert("変更が完了しました", isPresented: $isShowCompleteAlert) {
                     Button("OK") {
@@ -67,5 +50,5 @@ struct GroupEditView: View {
 
 
 #Preview {
-    GroupEditView(group: HashTagGroupDoc(name: "", tags: "", createdAt: nil), onUpdateGroup: {})
+    GroupEditView(group: HashTagGroupDoc(name: "", tags: "", createdAt: nil))
 }

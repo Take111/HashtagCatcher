@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import UIComponents
 
 package struct FindView: View {
     @State private var viewModel = FindViewModel()
@@ -22,7 +21,6 @@ package struct FindView: View {
                     .frame(height: 56)
             }
             .navigationBarTitleDisplayMode(.inline)
-            .background(Color(UIColor.background))
             .navigationDestination(for: HashTagType.self) { type in
                 HashTagListView(hashTagType: type)
             }

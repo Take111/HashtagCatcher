@@ -27,18 +27,7 @@ struct GroupCreateView: View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 24) {
-                    Text("グループ名")
-                        .font(.body.bold())
-                    TextField("", text: $groupName)
-                        .frame(width: 300, height: 32)
-                        .overlay(RoundedRectangle(cornerRadius: 8.0)
-                            .stroke(Color.gray))
-                    Text("ハッシュタグ")
-                        .font(.body.bold())
-                    TextEditor(text: $hashTags)
-                        .frame(width: 300, height: 200)
-                        .overlay(RoundedRectangle(cornerRadius: 8.0)
-                            .stroke(Color.gray))
+                    GroupFormFields(groupName: $groupName, hashtags: $hashTags)
                     MainButton(title: "保存する") {
                         viewModel.onTapSaveButton(groupName: groupName, hashTags: hashTags)
                         isShowCompleteAlert.toggle()
