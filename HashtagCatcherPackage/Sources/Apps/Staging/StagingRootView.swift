@@ -34,7 +34,7 @@ public struct StagingRootView: View {
                 }
                 .tag(3)
         }
-        .accentColor(Color(UIColor.primary))
+        .tint(Color(UIColor.primary))
     }
 }
 #Preview {

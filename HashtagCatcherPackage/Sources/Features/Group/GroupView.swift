@@ -7,6 +7,7 @@
 
 import SwiftUI
 import UIComponents
+import Models
 
 package struct GroupView: View {
 
@@ -18,70 +19,54 @@ package struct GroupView: View {
 
     package var body: some View {
         NavigationStack {
-            if !viewModel.groups.isEmpty {
-                List {
-                    ForEach(viewModel.groups, id: \.id) { group in
-                        HStack {
-                            Text(group.name)
-                            NavigationLink(
-                                destination:
-                                    GroupEditView(group: group),
-                                label: {
-                                    Text("")
-                                }
-                            )
+            Group {
+                if !viewModel.groups.isEmpty {
+                    List {
+                        ForEach(viewModel.groups) { group in
+                            NavigationLink(group.name, value: group)
+                                .frame(height: 48)
                         }
-                        .frame(height: 48)
+                        .onDelete { indexSet in
+                            guard let row = indexSet.first else { return }
+                            viewModel.deleteGroup(viewModel.groups[row])
+                        }
                     }
-                    .onDelete(perform: { indexSet in
-                        guard let row = indexSet.first else { return }
-                        viewModel.deleteGroup(viewModel.groups[row])
-                    })
+                } else {
+                    VStack(alignment: .center) {
+                        Spacer()
+                        Text("右上のボタンから、グループを作成しよう")
+                            .font(.callout)
+                        Spacer()
+                    }
                 }
-                .toolbar(content: {
-                    ToolbarItemGroup(placement: .navigationBarLeading) {
-                        EditButton()
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    EditButton()
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        isPresentedEditView.toggle()
+                    } label: {
+                        Image(systemName: "plus")
                     }
-                    ToolbarItemGroup(placement: .navigationBarTrailing) {
-                        Button(action: {
-                            isPresentedEditView.toggle()
-                        }, label: {
-                            Image(systemName: "plus")
-                        })
-                    }
+                }
+            }
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationDestination(for: HashTagGroupDoc.self) { group in
+                GroupEditView(group: group, onUpdateGroup: {
+                    viewModel.onAppear()
                 })
-                .navigationBarTitleDisplayMode(.inline)
-            } else {
-                VStack(alignment: .center) {
-                    Spacer()
-                    Text("右上のボタンから、グループを作成しよう")
-                        .font(.callout)
-                        .toolbar(content: {
-                            ToolbarItemGroup(placement: .navigationBarLeading) {
-                                EditButton()
-                            }
-                            ToolbarItemGroup(placement: .navigationBarTrailing) {
-                                Button(action: {
-                                    isPresentedEditView.toggle()
-                                }, label: {
-                                    Image(systemName: "plus")
-                                })
-                            }
-                        })
-                        .navigationBarTitleDisplayMode(.inline)
-                    Spacer()
-                }
             }
         }
         .onAppear {
             viewModel.onAppear()
         }
-        .fullScreenCover(isPresented: $isPresentedEditView, content: {
+        .fullScreenCover(isPresented: $isPresentedEditView) {
             GroupCreateView(onCreateGroup: {
                 viewModel.onAppear()
-            } )
-
-        })
+            })
+        }
     }
 }
 

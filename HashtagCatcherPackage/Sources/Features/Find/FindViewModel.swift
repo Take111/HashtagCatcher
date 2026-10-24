@@ -10,5 +10,5 @@ import Foundation
 @MainActor
 @Observable
 final class FindViewModel {
-    let types = HashTagType.allCases.map { $0 }
+    let types = HashTagType.allCases
 }

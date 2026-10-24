@@ -11,30 +11,31 @@ import Models
 import AlertToast
 
 struct GroupEditView: View {
-    @State private var groupName = ""
-    @State private var hashtags = ""
     @State private var isShowCompleteAlert = false
     @State private var isShowToast = false
 
-    @Environment(\.presentationMode) private var presentationMode
+    @Environment(\.dismiss) private var dismiss
 
     @State private var viewModel: GroupEditViewModel
 
-    init(group: HashTagGroupDoc) {
+    private let onUpdateGroup: () -> Void
+
+    init(group: HashTagGroupDoc, onUpdateGroup: @escaping () -> Void) {
         _viewModel = State(initialValue: GroupEditViewModel(group: group))
+        self.onUpdateGroup = onUpdateGroup
     }
 
     var body: some View {
         ScrollView {
             VStack(spacing: 24) {
                 Text("グループ名")
-                    .font(.bold(.body)())
+                    .font(.body.bold())
                 TextField("", text: $viewModel.groupName)
                     .frame(width: 300, height: 32)
                     .overlay(RoundedRectangle(cornerRadius: 8.0)
                         .stroke(Color.gray))
                 Text("ハッシュタグ")
-                    .font(.bold(.body)())
+                    .font(.body.bold())
                 TextEditor(text: $viewModel.hashtags)
                     .frame(width: 300, height: 200)
                     .overlay(RoundedRectangle(cornerRadius: 8.0)
@@ -46,17 +47,15 @@ struct GroupEditView: View {
                     }
                     SemiMainButton(title: "変更する") {
                         viewModel.onTapEditButton()
+                        onUpdateGroup()
                         isShowCompleteAlert.toggle()
                     }
                 }
-                .alert(isPresented: $isShowCompleteAlert, content: {
-                    Alert(title: Text("変更が完了しました"),
-                          dismissButton: .default(Text("OK"),
-                                                  action: {
-                        print("完了")
-                        presentationMode.wrappedValue.dismiss()
-                    }))
-                })
+                .alert("変更が完了しました", isPresented: $isShowCompleteAlert) {
+                    Button("OK") {
+                        dismiss()
+                    }
+                }
             }
         }
         .padding()
@@ -68,5 +67,5 @@ struct GroupEditView: View {
 
 
 #Preview {
-    GroupEditView(group: HashTagGroupDoc(name: "", tags: "", createdAt: nil))
+    GroupEditView(group: HashTagGroupDoc(name: "", tags: "", createdAt: nil), onUpdateGroup: {})
 }

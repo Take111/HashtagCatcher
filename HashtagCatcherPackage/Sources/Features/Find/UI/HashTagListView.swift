@@ -17,19 +17,14 @@ struct HashTagListView: View {
         _viewModel = State(initialValue: HashTagListViewModel(hashTagType: hashTagType))
     }
     var body: some View {
-        List {
-            ForEach(viewModel.hashTags, id: \.udid) { hashTag in
-                HStack {
-                    Button(action: {
-                        viewModel.didSelectHashTag(hashTag)
-                        isShowToast.toggle()
-                    }, label: {
-                        Text(hashTag.title)
-                    })
-                }.frame(height: 48)
+        List(viewModel.hashTags, id: \.udid) { hashTag in
+            Button(hashTag.title) {
+                viewModel.didSelectHashTag(hashTag)
+                isShowToast.toggle()
             }
-            .navigationTitle(viewModel.hashTagType.rawValue)
+            .frame(height: 48)
         }
+        .navigationTitle(viewModel.hashTagType.rawValue)
         .onAppear {
             viewModel.onApper()
         }

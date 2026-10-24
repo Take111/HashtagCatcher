@@ -18,22 +18,19 @@ package struct MainButton: View {
     }
 
     package var body: some View {
-        Button(action: {
+        Button {
             handler?()
-        }, label: {
-            HStack {
-                Text(titleText)
-                    .font(.bold(.body)())
-            }
-            .frame(width: 240, height: 56)
-        })
-            .background(Color(UIColor.primary))
-            .foregroundColor(.white)
-            .cornerRadius(16.0)
+        } label: {
+            Text(titleText)
+                .font(.body.bold())
+                .frame(width: 240, height: 56)
+        }
+        .background(Color(UIColor.primary))
+        .foregroundStyle(.white)
+        .clipShape(RoundedRectangle(cornerRadius: 16.0))
     }
 }
 
-#Preview {
+#Preview(traits: .sizeThatFitsLayout) {
     MainButton(title: "保存する")
-        .previewLayout(PreviewLayout.sizeThatFits)
 }

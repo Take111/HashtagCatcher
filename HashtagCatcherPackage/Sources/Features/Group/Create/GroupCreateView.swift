@@ -13,7 +13,7 @@ struct GroupCreateView: View {
     @State private var hashTags = ""
     @State private var isShowCompleteAlert = false
 
-    @Environment(\.presentationMode) private var presentationMode
+    @Environment(\.dismiss) private var dismiss
 
     @State private var viewModel = GroupCreateViewModel()
 
@@ -24,17 +24,17 @@ struct GroupCreateView: View {
     }
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ScrollView {
                 VStack(spacing: 24) {
                     Text("グループ名")
-                        .font(.bold(.body)())
+                        .font(.body.bold())
                     TextField("", text: $groupName)
                         .frame(width: 300, height: 32)
                         .overlay(RoundedRectangle(cornerRadius: 8.0)
                             .stroke(Color.gray))
                     Text("ハッシュタグ")
-                        .font(.bold(.body)())
+                        .font(.body.bold())
                     TextEditor(text: $hashTags)
                         .frame(width: 300, height: 200)
                         .overlay(RoundedRectangle(cornerRadius: 8.0)
@@ -44,28 +44,25 @@ struct GroupCreateView: View {
                         isShowCompleteAlert.toggle()
                         onCreateGroup()
                     }
-                    .alert(isPresented: $isShowCompleteAlert) {
-                        Alert(title: Text("保存が完了しました"),
-                              dismissButton: .default(Text("OK"), action: {
-                                  presentationMode.wrappedValue.dismiss()
-                              }))
+                    .alert("保存が完了しました", isPresented: $isShowCompleteAlert) {
+                        Button("OK") {
+                            dismiss()
+                        }
                     }
                 }
-                .toolbar(content: {
-                    ToolbarItemGroup(placement: .navigationBarLeading) {
-                        Button(action: {
-                            presentationMode.wrappedValue.dismiss()
-                        }, label: {
-                            Text("キャンセル")
-                        })
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button("キャンセル") {
+                            dismiss()
+                        }
                     }
-                })
+                }
                 .navigationTitle("グループを作成")
                 .navigationBarTitleDisplayMode(.inline)
                 .padding()
             }
         }
-        .accentColor(Color(UIColor.primary))
+        .tint(Color(UIColor.primary))
     }
 }
 
