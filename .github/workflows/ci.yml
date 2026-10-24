@@ -1,0 +1,67 @@
+name: iOS CI
+
+on:
+  pull_request:
+  push:
+    branches: [develop, main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ios-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    runs-on: macos-26
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Select pinned Xcode
+        run: |
+          XCODE_VERSION=$(cat .xcode-version)
+          DEVELOPER_DIR="/Applications/Xcode_${XCODE_VERSION}.app/Contents/Developer"
+          test -d "$DEVELOPER_DIR"
+          echo "DEVELOPER_DIR=$DEVELOPER_DIR" >> "$GITHUB_ENV"
+          DEVELOPER_DIR="$DEVELOPER_DIR" xcodebuild -version
+      - name: Resolve locked packages
+        run: |
+          xcodebuild -resolvePackageDependencies -workspace HashtagCatcher.xcworkspace \
+            -scheme ProductionApp -clonedSourcePackagesDirPath .build/SourcePackages \
+            -onlyUsePackageVersionsFromResolvedFile
+      - name: Build Production (Release)
+        run: |
+          set -o pipefail
+          xcodebuild -workspace HashtagCatcher.xcworkspace -scheme ProductionApp \
+            -configuration Release -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath .build/DerivedData -clonedSourcePackagesDirPath .build/SourcePackages \
+            -disableAutomaticPackageResolution CODE_SIGNING_ALLOWED=NO build | tee .build/production.log
+      - name: Build Staging (Debug)
+        run: |
+          set -o pipefail
+          xcodebuild -workspace HashtagCatcher.xcworkspace -scheme StagingApp \
+            -configuration Debug -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath .build/DerivedData -clonedSourcePackagesDirPath .build/SourcePackages \
+            -disableAutomaticPackageResolution CODE_SIGNING_ALLOWED=NO build | tee .build/staging.log
+      - name: Test package on iOS Simulator
+        run: |
+          set -o pipefail
+          xcodebuild -workspace HashtagCatcher.xcworkspace -scheme HashtagCatcherPackageTests \
+            -destination 'platform=iOS Simulator,name=iPhone 17,OS=26.5' \
+            -derivedDataPath .build/DerivedData -clonedSourcePackagesDirPath .build/SourcePackages \
+            -resultBundlePath .build/Tests.xcresult -disableAutomaticPackageResolution \
+            CODE_SIGNING_ALLOWED=NO test | tee .build/tests.log
+      - name: Upload build and test diagnostics
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: ios-diagnostics
+          path: |
+            .build/*.log
+            .build/Tests.xcresult
+          if-no-files-found: ignore
+          retention-days: 7

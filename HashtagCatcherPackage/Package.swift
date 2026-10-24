@@ -26,8 +26,8 @@ let package = Package(
             targets: ["StagingApp"]),
     ],
     dependencies: [
-        //　本当は20.0.0を使いたいが、うまく入らない
-        .package(url: "https://github.com/realm/realm-swift.git", from: "10.53.1"),
+        // Realm 20 includes the C++ compatibility fixes required by Xcode 26.4+.
+        .package(url: "https://github.com/realm/realm-swift.git", from: "20.0.6"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.4.0"),
         .package(url: "https://github.com/elai950/AlertToast.git", branch: "master")
     ],
@@ -46,12 +46,12 @@ let package = Package(
         ),
         .target(
             name: "FindFeature",
-            dependencies: ["UIComponents", "UseCases"],
+            dependencies: ["UIComponents", "UseCases", .alertToast],
             path: "./Sources/Features/Find"
         ),
         .target(
             name: "GroupFeature",
-            dependencies: ["UIComponents", "UseCases"],
+            dependencies: ["UIComponents", "UseCases", .alertToast],
             path: "./Sources/Features/Group"
         ),
         .target(
@@ -82,6 +82,10 @@ let package = Package(
         .target(
             name: "APIService",
             path: "./Sources/Core/APIService"
+        ),
+        .testTarget(
+            name: "HashtagCatcherPackageTests",
+            dependencies: ["Models", .realm]
         )
     ]
 )
