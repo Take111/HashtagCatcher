@@ -8,14 +8,17 @@
 import SwiftUI
 import UIComponents
 import Models
+import Routing
 
 package struct GroupView: View {
 
-    @State private var isPresentedEditView = false
+    @Binding private var createDraft: GroupDraft?
 
     @State private var viewModel = GroupViewModel()
 
-    package init() { }
+    package init(createDraft: Binding<GroupDraft?>) {
+        _createDraft = createDraft
+    }
 
     package var body: some View {
         NavigationStack {
@@ -46,7 +49,7 @@ package struct GroupView: View {
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        isPresentedEditView.toggle()
+                        createDraft = GroupDraft()
                     } label: {
                         Image(systemName: "plus")
                     }
@@ -61,8 +64,8 @@ package struct GroupView: View {
                 viewModel.onAppear()
             }
         }
-        .fullScreenCover(isPresented: $isPresentedEditView) {
-            GroupCreateView(onCreateGroup: {
+        .fullScreenCover(item: $createDraft) { draft in
+            GroupCreateView(draft: draft, onCreateGroup: {
                 viewModel.onAppear()
             })
         }
@@ -70,5 +73,6 @@ package struct GroupView: View {
 }
 
 #Preview {
-    GroupView()
+    @Previewable @State var createDraft: GroupDraft?
+    GroupView(createDraft: $createDraft)
 }

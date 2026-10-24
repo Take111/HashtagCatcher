@@ -93,4 +93,15 @@ final class ViewModelTests: XCTestCase {
         viewModel.didSelectHashTag(viewModel.hashTags[0])
         XCTAssertEqual(copied, ["travel"])
     }
+
+    func testHashTagListViewModelBuildsGroupDraftInListOrder() {
+        let viewModel = HashTagListViewModel(hashTagType: .travel)
+        viewModel.onApper()
+
+        let selection: Set = [viewModel.hashTags[3].udid, viewModel.hashTags[0].udid]
+        let draft = viewModel.groupDraft(for: selection)
+
+        XCTAssertEqual(draft.name, "旅行")
+        XCTAssertEqual(draft.hashtags, "#travel #海外旅行")
+    }
 }

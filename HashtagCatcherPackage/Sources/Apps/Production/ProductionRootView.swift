@@ -9,10 +9,12 @@ import SwiftUI
 import FindFeature
 import GroupFeature
 import SettingsFeature
+import Routing
 
 public struct ProductionRootView: View {
 
     @State private var selection = 2
+    @State private var groupDraft: GroupDraft?
 
     public init() {}
 
@@ -23,7 +25,7 @@ public struct ProductionRootView: View {
                     Label("探す", systemImage: "magnifyingglass")
                 }
                 .tag(1)
-            GroupView()
+            GroupView(createDraft: $groupDraft)
                 .tabItem {
                     Label("グループ", systemImage: "person.3")
                 }
@@ -35,6 +37,13 @@ public struct ProductionRootView: View {
                 .tag(3)
         }
         .tint(Color(UIColor.primary))
+        .environment(\.route, RouteAction { route in
+            switch route {
+            case let .createGroup(draft):
+                selection = 2
+                groupDraft = draft
+            }
+        })
     }
 }
 #Preview {

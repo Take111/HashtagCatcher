@@ -7,10 +7,11 @@
 
 import SwiftUI
 import UIComponents
+import Routing
 
 struct GroupCreateView: View {
-    @State private var groupName = ""
-    @State private var hashTags = ""
+    @State private var groupName: String
+    @State private var hashTags: String
     @State private var isShowCompleteAlert = false
 
     @Environment(\.dismiss) private var dismiss
@@ -19,7 +20,9 @@ struct GroupCreateView: View {
 
     private let onCreateGroup: () -> Void
 
-    init(onCreateGroup: @escaping () -> Void) {
+    init(draft: GroupDraft, onCreateGroup: @escaping () -> Void) {
+        _groupName = State(initialValue: draft.name)
+        _hashTags = State(initialValue: draft.hashtags)
         self.onCreateGroup = onCreateGroup
     }
 
@@ -56,5 +59,5 @@ struct GroupCreateView: View {
 }
 
 #Preview {
-    GroupCreateView(onCreateGroup: {})
+    GroupCreateView(draft: GroupDraft(), onCreateGroup: {})
 }

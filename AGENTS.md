@@ -6,7 +6,8 @@
 
 - `HashtagCatcher.xcworkspace` combines the local Swift package and both app projects.
 - `App/Production.xcodeproj` and `App/Staging.xcodeproj` are the app shells; their sources and resources are under `App/HashtagCatcher/`.
-- `HashtagCatcherPackage/Package.swift` declares the module graph: app roots → Find/Group/Settings features → UIComponents/UseCases → Models/Repositories/APIService.
+- `HashtagCatcherPackage/Package.swift` declares the module graph: app roots → Find/Group/Settings features → UIComponents/Routing/UseCases → Models/Repositories/APIService.
+- Features never import each other. A feature requests another feature's screen with the `\.route` environment action (`Routing`'s `AppRoute`), and the app root views decide how to show it.
 - Realm 20 stores hashtag groups locally (the app does not use Atlas Device Sync). Preserve the model schema, primary keys, and existing user data when changing persistence.
 - Both app shells set `INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO`: only OS-provided HTTPS is used and Realm has no encryption key. This is the repository owner's export-compliance declaration; revisit it before adding CryptoKit/CommonCrypto/Security usage, Realm encryption, or an SDK that bundles its own crypto.
 - SwiftPM dependencies and exact resolved revisions are tracked in `HashtagCatcher.xcworkspace/xcshareddata/swiftpm/Package.resolved`.
@@ -24,7 +25,7 @@ xcodebuild -workspace HashtagCatcher.xcworkspace -scheme StagingApp -configurati
 xcodebuild -workspace HashtagCatcher.xcworkspace -scheme HashtagCatcherPackageTests -destination 'platform=iOS Simulator,name=iPhone 17,OS=latest' -derivedDataPath .build/DerivedData CODE_SIGNING_ALLOWED=NO test
 ```
 
-Use `xcrun simctl list devices available` to choose an installed iOS simulator when the example is unavailable. The package imports UIKit/SwiftUI; macOS `swift test` is not a replacement for iOS tests. Xcode generates the `HashtagCatcherPackageTests` scheme from the declared package test target. Tests exercise model copying and in-memory Realm persistence without network services or production data. There is no configured SwiftLint ruleset; avoid introducing unrelated formatting changes.
+Use `xcrun simctl list devices available` to choose an installed iOS simulator when the example is unavailable. The package imports UIKit/SwiftUI; macOS `swift test` is not a replacement for iOS tests. Xcode generates the `HashtagCatcherPackageTests` scheme from the declared package test target. Tests exercise model copying, in-memory Realm persistence, view models with swift-dependencies overrides, and APIService with a stubbed `URLSession`, without network services or production data. There is no configured SwiftLint ruleset; avoid introducing unrelated formatting changes.
 
 ## CI and dependencies
 

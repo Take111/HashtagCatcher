@@ -12,6 +12,8 @@ package struct MainButton: View {
 
     package var handler: (() -> Void)?
 
+    @Environment(\.isEnabled) private var isEnabled
+
     package init(title: String, handler: (() -> Void)? = nil) {
         titleText = title
         self.handler = handler
@@ -25,7 +27,7 @@ package struct MainButton: View {
                 .font(.body.bold())
                 .frame(width: 240, height: 56)
         }
-        .background(Color(UIColor.primary))
+        .background(isEnabled ? Color(UIColor.primary) : Color(UIColor.systemGray3))
         .foregroundStyle(.white)
         .clipShape(RoundedRectangle(cornerRadius: 16.0))
     }

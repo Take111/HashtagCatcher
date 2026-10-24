@@ -36,22 +36,22 @@ let package = Package(
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "ProductionApp",
-            dependencies: features,
+            dependencies: features + ["Routing"],
             path: "./Sources/Apps/Production"
         ),
         .target(
             name: "StagingApp",
-            dependencies: features,
+            dependencies: features + ["Routing"],
             path: "./Sources/Apps/Staging"
         ),
         .target(
             name: "FindFeature",
-            dependencies: ["UIComponents", "UseCases", .alertToast],
+            dependencies: ["UIComponents", "Routing", "UseCases", .alertToast],
             path: "./Sources/Features/Find"
         ),
         .target(
             name: "GroupFeature",
-            dependencies: ["UIComponents", "UseCases", .alertToast],
+            dependencies: ["UIComponents", "Routing", "UseCases", .alertToast],
             path: "./Sources/Features/Group"
         ),
         .target(
@@ -63,6 +63,10 @@ let package = Package(
             name: "UIComponents",
             dependencies: [.alertToast],
             path: "./Sources/Core/UIComponents"
+        ),
+        .target(
+            name: "Routing",
+            path: "./Sources/Core/Routing"
         ),
         .target(
             name: "UseCases",
@@ -86,7 +90,7 @@ let package = Package(
         ),
         .testTarget(
             name: "HashtagCatcherPackageTests",
-            dependencies: ["Models", "APIService", "UseCases", "FindFeature", "GroupFeature", .realm, .swiftDependencies]
+            dependencies: ["Models", "APIService", "Routing", "UseCases", "FindFeature", "GroupFeature", .realm, .swiftDependencies]
         )
     ]
 )
