@@ -21,7 +21,10 @@
       "matchManagers": [
         "swift"
       ],
-      "rangeStrategy": "bump"
+      "rangeStrategy": "bump",
+      "prBodyNotes": [
+        "Before CI: run `xcodebuild -resolvePackageDependencies -workspace HashtagCatcher.xcworkspace -scheme ProductionApp` and commit `HashtagCatcher.xcworkspace/xcshareddata/swiftpm/Package.resolved`."
+      ]
     },
     {
       "matchManagers": [
