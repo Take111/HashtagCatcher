@@ -12,7 +12,7 @@
 
 ## Toolchain and validation
 
-Use Xcode 26.6 (`.xcode-version`) and Swift 5 language mode. The app deployment target remains iOS 17.5; the reusable package targets iOS 17. Do not raise these as a workaround for build failures.
+Use the Xcode version pinned in `.xcode-version` and Swift 5 language mode. The app deployment target remains iOS 17.5; the reusable package targets iOS 17. Do not raise these as a workaround for build failures.
 Select Xcode through `DEVELOPER_DIR` for the command/session; avoid changing the machine-wide selection.
 
 From the repository root:

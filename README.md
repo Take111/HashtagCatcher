@@ -20,7 +20,7 @@ AppStore is available [here](https://apps.apple.com/jp/app/%E3%83%8F%E3%83%83%E3
 
 ## Requirement
 
-- Xcode 26.6 (see `.xcode-version`)
+- Xcode 27.0 (see `.xcode-version`)
 - iOS 17.5 or later
 
 ## Development

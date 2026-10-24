@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   build-and-test:
-    runs-on: macos-26
+    runs-on: xcode-27
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
@@ -47,11 +47,12 @@ jobs:
             -configuration Debug -destination 'generic/platform=iOS Simulator' \
             -derivedDataPath .build/DerivedData -clonedSourcePackagesDirPath .build/SourcePackages \
             -disableAutomaticPackageResolution CODE_SIGNING_ALLOWED=NO build | tee .build/staging.log
+      # Keep the runtime pinned to the version verified with this Xcode toolchain.
       - name: Test package on iOS Simulator
         run: |
           set -o pipefail
           xcodebuild -workspace HashtagCatcher.xcworkspace -scheme HashtagCatcherPackageTests \
-            -destination 'platform=iOS Simulator,name=iPhone 17,OS=26.5' \
+            -destination 'platform=iOS Simulator,name=iPhone 17,OS=27.0' \
             -derivedDataPath .build/DerivedData -clonedSourcePackagesDirPath .build/SourcePackages \
             -resultBundlePath .build/Tests.xcresult -disableAutomaticPackageResolution \
             CODE_SIGNING_ALLOWED=NO test | tee .build/tests.log
