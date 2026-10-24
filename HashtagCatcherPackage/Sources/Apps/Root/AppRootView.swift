@@ -20,17 +20,17 @@ package struct AppRootView: View {
         TabView(selection: $selection) {
             FindView()
                 .tabItem {
-                    Label("探す", systemImage: "magnifyingglass")
+                    Label(String(localized: "探す", bundle: .module), systemImage: "magnifyingglass")
                 }
                 .tag(Tab.find)
             GroupView(createDraft: $groupDraft)
                 .tabItem {
-                    Label("グループ", systemImage: "person.3")
+                    Label(String(localized: "グループ", bundle: .module), systemImage: "person.3")
                 }
                 .tag(Tab.group)
             SettingsView()
                 .tabItem {
-                    Label("設定", systemImage: "gear")
+                    Label(String(localized: "設定", bundle: .module), systemImage: "gear")
                 }
                 .tag(Tab.settings)
         }

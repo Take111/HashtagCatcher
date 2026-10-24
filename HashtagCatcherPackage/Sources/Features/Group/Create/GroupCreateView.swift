@@ -29,12 +29,12 @@ struct GroupCreateView: View {
             ScrollView {
                 VStack(spacing: 24) {
                     GroupFormFields(groupName: $draft.name, hashtags: $draft.hashtags)
-                    MainButton(title: "保存する") {
+                    MainButton(title: String(localized: "保存する", bundle: .module)) {
                         viewModel.onTapSaveButton(groupName: draft.name, hashTags: draft.hashtags)
                         isShowCompleteAlert.toggle()
                         onCreateGroup()
                     }
-                    .alert("保存が完了しました", isPresented: $isShowCompleteAlert) {
+                    .alert(Text("保存が完了しました", bundle: .module), isPresented: $isShowCompleteAlert) {
                         Button("OK") {
                             dismiss()
                         }
@@ -42,12 +42,12 @@ struct GroupCreateView: View {
                 }
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
-                        Button("キャンセル") {
+                        Button(String(localized: "キャンセル", bundle: .module)) {
                             dismiss()
                         }
                     }
                 }
-                .navigationTitle("グループを作成")
+                .navigationTitle(Text("グループを作成", bundle: .module))
                 .navigationBarTitleDisplayMode(.inline)
                 .padding()
             }

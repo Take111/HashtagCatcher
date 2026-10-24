@@ -23,7 +23,7 @@ package struct SettingsView: View {
                 Text("Debug version")
                 #endif
                 HStack {
-                    Text("バージョン")
+                    Text("バージョン", bundle: .module)
                     Spacer()
                     Text(version ?? "1.0.0")
                 }
@@ -31,14 +31,14 @@ package struct SettingsView: View {
                     viewModel.didTappedReview()
                 } label: {
                     HStack {
-                        Text("アプリのレビューをする")
+                        Text("アプリのレビューをする", bundle: .module)
                         Spacer()
                         Image(systemName: "chevron.right")
                     }
                 }
                 .foregroundStyle(.primary)
             }
-            .navigationTitle("設定")
+            .navigationTitle(Text("設定", bundle: .module))
             .navigationBarTitleDisplayMode(.inline)
         }
     }

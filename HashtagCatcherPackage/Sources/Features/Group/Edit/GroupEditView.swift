@@ -26,15 +26,15 @@ struct GroupEditView: View {
         ScrollView {
             VStack(spacing: 24) {
                 GroupFormFields(groupName: $viewModel.groupName, hashtags: $viewModel.hashtags)
-                MainButton(title: "コピーする") {
+                MainButton(title: String(localized: "コピーする", bundle: .module)) {
                     viewModel.onTapPasteButton()
                     isShowToast.toggle()
                 }
-                SemiMainButton(title: "変更する") {
+                SemiMainButton(title: String(localized: "変更する", bundle: .module)) {
                     viewModel.onTapEditButton()
                     isShowCompleteAlert.toggle()
                 }
-                .alert("変更が完了しました", isPresented: $isShowCompleteAlert) {
+                .alert(Text("変更が完了しました", bundle: .module), isPresented: $isShowCompleteAlert) {
                     Button("OK") {
                         dismiss()
                     }
@@ -43,7 +43,7 @@ struct GroupEditView: View {
         }
         .padding()
         .toast(isPresenting: $isShowToast) {
-            AlertToast(displayMode: .hud, type: .regular, title: "コピーしました")
+            AlertToast(displayMode: .hud, type: .regular, title: String(localized: "コピーしました", bundle: .module))
         }
     }
 }

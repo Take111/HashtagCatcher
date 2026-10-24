@@ -40,14 +40,14 @@ struct HashTagListView: View {
         .navigationTitle(viewModel.hashTagType.rawValue)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Button(editMode.isEditing ? "キャンセル" : "選択") {
+                Button(editMode.isEditing ? String(localized: "キャンセル", bundle: .module) : String(localized: "選択", bundle: .module)) {
                     setSelecting(!editMode.isEditing)
                 }
             }
         }
         .safeAreaInset(edge: .bottom) {
             if editMode.isEditing {
-                MainButton(title: "グループを作成") {
+                MainButton(title: String(localized: "グループを作成", bundle: .module)) {
                     route(.createGroup(viewModel.groupDraft(for: selection)))
                     setSelecting(false)
                 }
@@ -59,7 +59,7 @@ struct HashTagListView: View {
             viewModel.onApper()
         }
         .toast(isPresenting: $isShowToast) {
-            AlertToast(displayMode: .hud, type: .regular, title: "コピーしました")
+            AlertToast(displayMode: .hud, type: .regular, title: String(localized: "コピーしました", bundle: .module))
         }
     }
 

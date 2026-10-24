@@ -26,7 +26,7 @@ package struct GroupView: View {
                 if viewModel.groups.isEmpty {
                     VStack {
                         Spacer()
-                        Text("右上のボタンから、グループを作成しよう")
+                        Text("右上のボタンから、グループを作成しよう", bundle: .module)
                             .font(.callout)
                         Spacer()
                     }

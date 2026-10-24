@@ -13,6 +13,7 @@ private let features: [PackageDescription.Target.Dependency] = ["FindFeature", "
 
 let package = Package(
     name: "HashtagCatcherPackage",
+    defaultLocalization: "ja",
     platforms: [
         .iOS(.v17)
     ],
@@ -47,22 +48,26 @@ let package = Package(
         .target(
             name: "AppRoot",
             dependencies: features + ["Routing", "UIComponents"],
-            path: "./Sources/Apps/Root"
+            path: "./Sources/Apps/Root",
+            resources: [.process("Localizable.xcstrings")]
         ),
         .target(
             name: "FindFeature",
             dependencies: ["UIComponents", "Routing", "UseCases", .alertToast],
-            path: "./Sources/Features/Find"
+            path: "./Sources/Features/Find",
+            resources: [.process("Localizable.xcstrings")]
         ),
         .target(
             name: "GroupFeature",
             dependencies: ["UIComponents", "Routing", "UseCases", .alertToast],
-            path: "./Sources/Features/Group"
+            path: "./Sources/Features/Group",
+            resources: [.process("Localizable.xcstrings")]
         ),
         .target(
             name: "SettingsFeature",
             dependencies: ["UIComponents", "UseCases"],
-            path: "./Sources/Features/Settings"
+            path: "./Sources/Features/Settings",
+            resources: [.process("Localizable.xcstrings")]
         ),
         .target(
             name: "UIComponents",
