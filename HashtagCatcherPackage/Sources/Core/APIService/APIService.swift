@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Dependencies
 
 // TODO: Dependencyを使いたいがGenericsを使っているため、うまくInjectできない
 protocol APIService {
@@ -13,28 +14,12 @@ protocol APIService {
 }
 
 final class APIServiceImpl: APIService {
-    private let session: URLSession
-
-    init(session: URLSession = .shared) {
-        self.session = session
-    }
+    @Dependency(\.urlSession) private var session
 
     package func request<T: Decodable>(target: T.Type, url: URL) async throws -> [T] {
-        let request = URLRequest(url: url)
-        let decoder = JSONDecoder()
-
-        let data: Data
-        do {
-            (data, _) = try await session.data(for: request)
-        } catch {
-            throw APIServiceError.responseError
-        }
-
-        do {
-            return try decoder.decode([T].self, from: data)
-        } catch {
-            throw APIServiceError.parseError
-        }
+        guard let (data, _) = try? await session.data(from: url) else { throw APIServiceError.responseError }
+        guard let items = try? JSONDecoder().decode([T].self, from: data) else { throw APIServiceError.parseError }
+        return items
     }
 }
 

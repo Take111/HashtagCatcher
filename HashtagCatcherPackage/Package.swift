@@ -81,6 +81,7 @@ let package = Package(
         ),
         .target(
             name: "APIService",
+            dependencies: [.swiftDependencies],
             path: "./Sources/Core/APIService"
         ),
         .testTarget(

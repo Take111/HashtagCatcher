@@ -1,4 +1,5 @@
 import XCTest
+import Dependencies
 @testable import APIService
 
 final class APIServiceTests: XCTestCase {
@@ -6,62 +7,60 @@ final class APIServiceTests: XCTestCase {
         let name: String
     }
 
-    private let url = URL(string: "https://example.com/items")!
-
     override func tearDown() {
         StubURLProtocol.handler = nil
         super.tearDown()
     }
 
     func testRequestDecodesArray() async throws {
-        StubURLProtocol.handler = { request in
-            (HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!,
-             Data(#"[{"name":"travel"},{"name":"food"}]"#.utf8))
-        }
-        let items = try await makeService().request(target: Item.self, url: url)
+        StubURLProtocol.handler = { _ in Data(#"[{"name":"travel"},{"name":"food"}]"#.utf8) }
+        let items = try await makeService().request(target: Item.self, url: URL(string: "https://example.com/items")!)
         XCTAssertEqual(items, [Item(name: "travel"), Item(name: "food")])
     }
 
     func testRequestMapsDecodingFailureToParseError() async {
-        StubURLProtocol.handler = { request in
-            (HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!,
-             Data("not json".utf8))
-        }
-        do {
-            _ = try await makeService().request(target: Item.self, url: url)
-            XCTFail("Expected parseError")
-        } catch {
-            XCTAssertEqual(error as? APIServiceError, .parseError)
-        }
+        StubURLProtocol.handler = { _ in Data("not json".utf8) }
+        let error = await requestError()
+        XCTAssertEqual(error as? APIServiceError, .parseError)
     }
 
     func testRequestMapsTransportFailureToResponseError() async {
         StubURLProtocol.handler = { _ in throw URLError(.notConnectedToInternet) }
-        do {
-            _ = try await makeService().request(target: Item.self, url: url)
-            XCTFail("Expected responseError")
-        } catch {
-            XCTAssertEqual(error as? APIServiceError, .responseError)
-        }
+        let error = await requestError()
+        XCTAssertEqual(error as? APIServiceError, .responseError)
     }
 
     private func makeService() -> APIServiceImpl {
         let configuration = URLSessionConfiguration.ephemeral
         configuration.protocolClasses = [StubURLProtocol.self]
-        return APIServiceImpl(session: URLSession(configuration: configuration))
+        return withDependencies {
+            $0.urlSession = URLSession(configuration: configuration)
+        } operation: {
+            APIServiceImpl()
+        }
+    }
+
+    private func requestError() async -> Error? {
+        do {
+            _ = try await makeService().request(target: Item.self, url: URL(string: "https://example.com/items")!)
+        } catch {
+            return error
+        }
+        return nil
     }
 }
 
 private final class StubURLProtocol: URLProtocol {
-    static var handler: ((URLRequest) throws -> (HTTPURLResponse, Data))?
+    static var handler: ((URLRequest) throws -> Data)?
 
     override class func canInit(with request: URLRequest) -> Bool { true }
     override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
 
     override func startLoading() {
         do {
-            guard let handler = Self.handler else { throw URLError(.unknown) }
-            let (response, data) = try handler(request)
+            guard let handler = Self.handler, let url = request.url else { throw URLError(.unknown) }
+            let data = try handler(request)
+            let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!
             client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
             client?.urlProtocol(self, didLoad: data)
             client?.urlProtocolDidFinishLoading(self)

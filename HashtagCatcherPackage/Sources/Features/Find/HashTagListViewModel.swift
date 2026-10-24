@@ -6,14 +6,13 @@
 //
 
 import Foundation
-import Observation
 import UseCases
 import Dependencies
 
 @MainActor
 @Observable
 final class HashTagListViewModel {
-    var hashTagType: HashTagType
+    let hashTagType: HashTagType
     var hashTags: [HashTag] = []
 
     @ObservationIgnored

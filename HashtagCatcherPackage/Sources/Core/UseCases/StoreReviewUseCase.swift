@@ -44,6 +44,11 @@ extension StoreReviewUseCase: DependencyKey {
             UIApplication.shared.open(reviewURL, options: [:], completionHandler: nil)
         }
     )
+
+    package static let testValue = Self(
+        showStoreReview: unimplemented("StoreReviewUseCase.showStoreReview"),
+        moveAppStoreReview: unimplemented("StoreReviewUseCase.moveAppStoreReview")
+    )
 }
 
 package extension DependencyValues {

@@ -1,7 +1,7 @@
 import XCTest
 import Dependencies
 import Models
-@testable import UseCases
+import UseCases
 @testable import FindFeature
 @testable import GroupFeature
 
@@ -15,11 +15,8 @@ final class ViewModelTests: XCTestCase {
             HashTagGroupDoc(name: "Food", tags: "#food", createdAt: date)
         ]
         let viewModel = withDependencies {
-            $0.hashTagGroupUseCase = HashTagGroupUseCase(
-                createHashTagGroup: { stored.append($0) },
-                fetchHashTagGroups: { stored },
-                deleteHashTagGroup: { group in stored.removeAll { $0.id == group.id } }
-            )
+            $0.hashTagGroupUseCase.fetchHashTagGroups = { stored }
+            $0.hashTagGroupUseCase.deleteHashTagGroup = { group in stored.removeAll { $0.id == group.id } }
         } operation: {
             GroupViewModel()
         }
@@ -34,20 +31,15 @@ final class ViewModelTests: XCTestCase {
     func testGroupCreateViewModelSavesGroup() {
         var created: [HashTagGroupDoc] = []
         let viewModel = withDependencies {
-            $0.hashTagGroupUseCase = HashTagGroupUseCase(
-                createHashTagGroup: { created.append($0) },
-                fetchHashTagGroups: { [] },
-                deleteHashTagGroup: { _ in }
-            )
+            $0.hashTagGroupUseCase.createHashTagGroup = { created.append($0) }
         } operation: {
             GroupCreateViewModel()
         }
 
         viewModel.onTapSaveButton(groupName: "Travel", hashTags: "#旅行 #travel")
 
-        XCTAssertEqual(created.count, 1)
-        XCTAssertEqual(created.first?.name, "Travel")
-        XCTAssertEqual(created.first?.tags, "#旅行 #travel")
+        XCTAssertEqual(created.map(\.name), ["Travel"])
+        XCTAssertEqual(created.map(\.tags), ["#旅行 #travel"])
         XCTAssertNotNil(created.first?.createdAt)
     }
 
@@ -55,11 +47,7 @@ final class ViewModelTests: XCTestCase {
         let original = HashTagGroupDoc(name: "Travel", tags: "#旅行", createdAt: date)
         var saved: [HashTagGroupDoc] = []
         let viewModel = withDependencies {
-            $0.hashTagGroupUseCase = HashTagGroupUseCase(
-                createHashTagGroup: { saved.append($0) },
-                fetchHashTagGroups: { [] },
-                deleteHashTagGroup: { _ in }
-            )
+            $0.hashTagGroupUseCase.createHashTagGroup = { saved.append($0) }
         } operation: {
             GroupEditViewModel(group: original)
         }
@@ -71,18 +59,17 @@ final class ViewModelTests: XCTestCase {
         viewModel.hashtags = "#trip"
         viewModel.onTapEditButton()
 
-        XCTAssertEqual(saved.count, 1)
-        XCTAssertEqual(saved.first?.id, original.id)
-        XCTAssertEqual(saved.first?.name, "Trip")
-        XCTAssertEqual(saved.first?.tags, "#trip")
+        XCTAssertEqual(saved.map(\.id), [original.id])
+        XCTAssertEqual(saved.map(\.name), ["Trip"])
+        XCTAssertEqual(saved.map(\.tags), ["#trip"])
         XCTAssertEqual(original.name, "Travel")
     }
 
     func testGroupEditViewModelCopiesHashtags() {
         var copied: [String] = []
         let viewModel = withDependencies {
-            $0.pasteBoardUseCase = PasteBoardUseCase(pastText: { copied.append($0) })
-            $0.storeReviewUseCase = StoreReviewUseCase(showStoreReview: {}, moveAppStoreReview: {})
+            $0.pasteBoardUseCase.pastText = { copied.append($0) }
+            $0.storeReviewUseCase.showStoreReview = {}
         } operation: {
             GroupEditViewModel(group: HashTagGroupDoc(name: "Travel", tags: "#旅行 #travel", createdAt: date))
         }
@@ -95,7 +82,7 @@ final class ViewModelTests: XCTestCase {
     func testHashTagListViewModelLoadsAndCopiesHashTag() {
         var copied: [String] = []
         let viewModel = withDependencies {
-            $0.pasteBoardUseCase = PasteBoardUseCase(pastText: { copied.append($0) })
+            $0.pasteBoardUseCase.pastText = { copied.append($0) }
         } operation: {
             HashTagListViewModel(hashTagType: .travel)
         }
