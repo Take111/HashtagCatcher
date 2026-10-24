@@ -21,6 +21,12 @@
       "matchManagers": [
         "swift"
       ],
+      "rangeStrategy": "bump"
+    },
+    {
+      "matchManagers": [
+        "swift"
+      ],
       "matchUpdateTypes": [
         "minor",
         "patch"
