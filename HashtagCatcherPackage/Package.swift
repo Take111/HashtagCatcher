@@ -36,13 +36,18 @@ let package = Package(
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "ProductionApp",
-            dependencies: features + ["Routing"],
+            dependencies: ["AppRoot"],
             path: "./Sources/Apps/Production"
         ),
         .target(
             name: "StagingApp",
-            dependencies: features + ["Routing"],
+            dependencies: ["AppRoot"],
             path: "./Sources/Apps/Staging"
+        ),
+        .target(
+            name: "AppRoot",
+            dependencies: features + ["Routing", "UIComponents"],
+            path: "./Sources/Apps/Root"
         ),
         .target(
             name: "FindFeature",

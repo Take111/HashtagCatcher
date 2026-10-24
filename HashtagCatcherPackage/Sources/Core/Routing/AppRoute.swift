@@ -1,11 +1,11 @@
 import SwiftUI
 
-/// A screen in another feature. Features request it through `\.route`; the app root decides how to show it.
-package enum AppRoute: Hashable {
+/// A screen in another feature. Features request it through `\.route`; `AppRootView` decides how to show it.
+package enum AppRoute {
     case createGroup(GroupDraft)
 }
 
-package struct GroupDraft: Hashable, Identifiable {
+package struct GroupDraft: Identifiable {
     package let id = UUID()
     package var name: String
     package var hashtags: String

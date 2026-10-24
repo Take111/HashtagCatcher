@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct HashTag: Hashable {
-    let udid = UUID()
+struct HashTag: Identifiable {
     let title: String
+
+    var id: String { title }
 }

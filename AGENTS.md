@@ -6,8 +6,8 @@
 
 - `HashtagCatcher.xcworkspace` combines the local Swift package and both app projects.
 - `App/Production.xcodeproj` and `App/Staging.xcodeproj` are the app shells; their sources and resources are under `App/HashtagCatcher/`.
-- `HashtagCatcherPackage/Package.swift` declares the module graph: app roots → Find/Group/Settings features → UIComponents/Routing/UseCases → Models/Repositories/APIService.
-- Features never import each other. A feature requests another feature's screen with the `\.route` environment action (`Routing`'s `AppRoute`), and the app root views decide how to show it.
+- `HashtagCatcherPackage/Package.swift` declares the module graph: app roots → AppRoot → Find/Group/Settings features → UIComponents/Routing/UseCases → Models/Repositories/APIService.
+- Features never import each other. A feature requests another feature's screen with the `\.route` environment action (`Routing`'s `AppRoute`), and the shared `AppRootView` (used by both app roots) decides how to show it.
 - Realm 20 stores hashtag groups locally (the app does not use Atlas Device Sync). Preserve the model schema, primary keys, and existing user data when changing persistence.
 - Both app shells set `INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO`: only OS-provided HTTPS is used and Realm has no encryption key. This is the repository owner's export-compliance declaration; revisit it before adding CryptoKit/CommonCrypto/Security usage, Realm encryption, or an SDK that bundles its own crypto.
 - SwiftPM dependencies and exact resolved revisions are tracked in `HashtagCatcher.xcworkspace/xcshareddata/swiftpm/Package.resolved`.

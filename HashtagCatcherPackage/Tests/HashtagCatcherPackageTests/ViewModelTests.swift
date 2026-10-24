@@ -1,6 +1,7 @@
 import XCTest
 import Dependencies
 import Models
+import Routing
 import UseCases
 @testable import FindFeature
 @testable import GroupFeature
@@ -98,7 +99,7 @@ final class ViewModelTests: XCTestCase {
         let viewModel = HashTagListViewModel(hashTagType: .travel)
         viewModel.onApper()
 
-        let selection: Set = [viewModel.hashTags[3].udid, viewModel.hashTags[0].udid]
+        let selection: Set = [viewModel.hashTags[3].id, viewModel.hashTags[0].id]
         let draft = viewModel.groupDraft(for: selection)
 
         XCTAssertEqual(draft.name, "旅行")

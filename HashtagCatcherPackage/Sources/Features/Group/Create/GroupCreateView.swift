@@ -10,8 +10,7 @@ import UIComponents
 import Routing
 
 struct GroupCreateView: View {
-    @State private var groupName: String
-    @State private var hashTags: String
+    @State private var draft: GroupDraft
     @State private var isShowCompleteAlert = false
 
     @Environment(\.dismiss) private var dismiss
@@ -21,8 +20,7 @@ struct GroupCreateView: View {
     private let onCreateGroup: () -> Void
 
     init(draft: GroupDraft, onCreateGroup: @escaping () -> Void) {
-        _groupName = State(initialValue: draft.name)
-        _hashTags = State(initialValue: draft.hashtags)
+        _draft = State(initialValue: draft)
         self.onCreateGroup = onCreateGroup
     }
 
@@ -30,9 +28,9 @@ struct GroupCreateView: View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 24) {
-                    GroupFormFields(groupName: $groupName, hashtags: $hashTags)
+                    GroupFormFields(groupName: $draft.name, hashtags: $draft.hashtags)
                     MainButton(title: "保存する") {
-                        viewModel.onTapSaveButton(groupName: groupName, hashTags: hashTags)
+                        viewModel.onTapSaveButton(groupName: draft.name, hashTags: draft.hashtags)
                         isShowCompleteAlert.toggle()
                         onCreateGroup()
                     }

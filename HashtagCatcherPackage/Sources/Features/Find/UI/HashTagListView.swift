@@ -15,7 +15,7 @@ struct HashTagListView: View {
     @State private var viewModel: HashTagListViewModel
     @State private var isShowToast = false
     @State private var editMode = EditMode.inactive
-    @State private var selection = Set<UUID>()
+    @State private var selection = Set<HashTag.ID>()
 
     @Environment(\.route) private var route
 
@@ -23,7 +23,7 @@ struct HashTagListView: View {
         _viewModel = State(initialValue: HashTagListViewModel(hashTagType: hashTagType))
     }
     var body: some View {
-        List(viewModel.hashTags, id: \.udid, selection: $selection) { hashTag in
+        List(viewModel.hashTags, selection: $selection) { hashTag in
             Group {
                 if editMode.isEditing {
                     Text(hashTag.title)
