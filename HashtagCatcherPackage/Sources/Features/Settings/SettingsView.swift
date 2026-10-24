@@ -12,7 +12,7 @@ package struct SettingsView: View {
 
     private let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String
 
-    @StateObject var viewModel = SettingsViewModel()
+    @State private var viewModel = SettingsViewModel()
 
     package init() { }
 

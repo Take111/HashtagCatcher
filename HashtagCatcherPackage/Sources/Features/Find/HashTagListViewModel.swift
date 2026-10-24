@@ -6,13 +6,17 @@
 //
 
 import Foundation
+import Observation
 import UseCases
 import Dependencies
 
-final class HashTagListViewModel: ObservableObject {
-    @Published var hashTagType: HashTagType
-    @Published var hashTags: [HashTag] = []
+@MainActor
+@Observable
+final class HashTagListViewModel {
+    var hashTagType: HashTagType
+    var hashTags: [HashTag] = []
 
+    @ObservationIgnored
     @Dependency(\.pasteBoardUseCase) private var pasteBoardUseCase: PasteBoardUseCase
 
     init(hashTagType: HashTagType) {

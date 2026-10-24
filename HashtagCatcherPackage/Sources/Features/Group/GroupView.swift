@@ -12,7 +12,7 @@ package struct GroupView: View {
 
     @State private var isPresentedEditView = false
 
-    @StateObject var viewModel = GroupViewModel()
+    @State private var viewModel = GroupViewModel()
 
     package init() { }
 

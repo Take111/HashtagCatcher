@@ -11,7 +11,7 @@ import UIComponents
 package struct FindView: View {
     @State private var isPresentedCilpboard = false
 
-    @StateObject var viewModel: FindViewModel = FindViewModel()
+    @State private var viewModel = FindViewModel()
 
     package init() {
 

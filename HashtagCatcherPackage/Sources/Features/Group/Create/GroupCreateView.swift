@@ -15,7 +15,7 @@ struct GroupCreateView: View {
 
     @Environment(\.presentationMode) private var presentationMode
 
-    @StateObject var viewModel: GroupCreateViewModel = GroupCreateViewModel()
+    @State private var viewModel = GroupCreateViewModel()
 
     private let onCreateGroup: () -> Void
 

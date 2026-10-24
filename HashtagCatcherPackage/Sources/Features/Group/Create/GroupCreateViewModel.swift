@@ -6,13 +6,16 @@
 //
 
 import Foundation
-import Combine
+import Observation
 import Dependencies
 import UseCases
 import Models
 
-final class GroupCreateViewModel: ObservableObject {
+@MainActor
+@Observable
+final class GroupCreateViewModel {
 
+    @ObservationIgnored
     @Dependency(\.hashTagGroupUseCase) private var useCase
 
     func onTapSaveButton(groupName: String, hashTags: String) {

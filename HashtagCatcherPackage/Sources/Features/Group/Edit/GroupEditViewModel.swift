@@ -6,17 +6,22 @@
 //
 
 import Foundation
-import Combine
+import Observation
 import Dependencies
 import Models
 import UseCases
 
-final class GroupEditViewModel: ObservableObject {
-    @Published var groupName: String = ""
-    @Published var hashtags: String = ""
+@MainActor
+@Observable
+final class GroupEditViewModel {
+    var groupName: String = ""
+    var hashtags: String = ""
 
+    @ObservationIgnored
     @Dependency(\.hashTagGroupUseCase) private var hashTagGroupUseCase
+    @ObservationIgnored
     @Dependency(\.pasteBoardUseCase) private var pasteBoardUseCase
+    @ObservationIgnored
     @Dependency(\.storeReviewUseCase) private var storeReviewUseCase
 
     private let group: HashTagGroupDoc

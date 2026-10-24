@@ -6,11 +6,15 @@
 //
 
 import Foundation
+import Observation
 import UseCases
 import Dependencies
 
-final class SettingsViewModel: ObservableObject {
+@MainActor
+@Observable
+final class SettingsViewModel {
 
+    @ObservationIgnored
     @Dependency(\.storeReviewUseCase) private var storeReviewUseCase
 
     func didTappedReview() {
