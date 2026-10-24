@@ -1,0 +1,91 @@
+name: Upload to TestFlight
+
+on:
+  workflow_dispatch:
+    inputs:
+      build_number:
+        description: 'New CFBundleVersion, greater than the last uploaded build (for example 2)'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: testflight-upload
+  cancel-in-progress: false
+
+jobs:
+  preflight:
+    if: >-
+      github.event_name == 'workflow_dispatch' &&
+      github.repository == 'Take111/HashtagCatcher' &&
+      github.event.repository.default_branch == 'develop' &&
+      github.ref == 'refs/heads/develop' &&
+      github.actor == 'Take111' && github.triggering_actor == 'Take111'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Verify existing Environment protections
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 ci/testflight-guard.py
+
+  upload:
+    needs: preflight
+    # Re-evaluate on re-runs too, even when the original preflight already passed.
+    if: >-
+      github.event_name == 'workflow_dispatch' &&
+      github.repository == 'Take111/HashtagCatcher' &&
+      github.event.repository.default_branch == 'develop' &&
+      github.ref == 'refs/heads/develop' &&
+      github.actor == 'Take111' && github.triggering_actor == 'Take111'
+    runs-on: xcode-27
+    timeout-minutes: 60
+    environment: testflight
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Recheck protections after approval
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 ci/testflight-guard.py
+      - name: Select pinned Xcode
+        run: |
+          XCODE_VERSION=$(cat .xcode-version)
+          DEVELOPER_DIR="/Applications/Xcode_${XCODE_VERSION}.app/Contents/Developer"
+          test -d "$DEVELOPER_DIR"
+          echo "DEVELOPER_DIR=$DEVELOPER_DIR" >> "$GITHUB_ENV"
+          DEVELOPER_DIR="$DEVELOPER_DIR" xcodebuild -version
+      - name: Resolve locked packages without release credentials
+        run: |
+          xcodebuild -resolvePackageDependencies -workspace HashtagCatcher.xcworkspace \
+            -scheme ProductionApp -clonedSourcePackagesDirPath .build/SourcePackages \
+            -onlyUsePackageVersionsFromResolvedFile
+      - name: Archive with existing distribution signing assets
+        env:
+          BUILD_NUMBER: ${{ inputs.build_number }}
+          DISTRIBUTION_P12_BASE64: ${{ secrets.DISTRIBUTION_P12_BASE64 }}
+          DISTRIBUTION_P12_PASSWORD: ${{ secrets.DISTRIBUTION_P12_PASSWORD }}
+          APP_STORE_PROFILE_BASE64: ${{ secrets.APP_STORE_PROFILE_BASE64 }}
+        run: bash ci/testflight-release.sh archive
+      - name: Export and upload to App Store Connect
+        env:
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_PRIVATE_KEY_P8: ${{ secrets.ASC_PRIVATE_KEY_P8 }}
+        run: bash ci/testflight-release.sh upload
+      - name: Remove temporary signing and upload material
+        if: always()
+        run: bash ci/testflight-release.sh cleanup

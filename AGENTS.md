@@ -27,7 +27,9 @@ Use `xcrun simctl list devices available` to choose an installed iOS simulator w
 
 ## CI and dependencies
 
-GitHub Actions builds both app shells and runs the package tests on an iOS simulator without signing credentials. Keep workflows safe for public fork PRs: read-only permissions, no secrets, no `pull_request_target`, no deployment steps. Use pinned action commits and review dependency changes together with the resolved lockfile.
+GitHub Actions builds both app shells and runs the package tests on an iOS simulator without signing credentials. Keep PR workflows safe for public forks: read-only permissions, no secrets, no `pull_request_target`, no deployment steps. Use pinned action commits and review dependency changes together with the resolved lockfile.
+
+The separate manual TestFlight workflow is documented in `docs/testflight.md`. It requires Take111 as both original and re-run actor, the trusted default branch `develop`, and verified Environment protections. Never dispatch it without explicit upload authorization. For workflow changes, run `python3 -m unittest discover -s ci -p 'test_*.py'`, `bash -n ci/testflight-release.sh`, `shellcheck ci/testflight-release.sh`, and actionlint before the normal build checks. Never use real credentials in tests.
 
 Renovate checks SwiftPM and GitHub Actions on Monday before 09:00 Asia/Tokyo, groups non-major Swift updates, and requires dashboard approval for Swift major updates. Swift ranges use `bump` so new non-major releases also generate proposals. After a Swift update, manually run `xcodebuild -resolvePackageDependencies -workspace HashtagCatcher.xcworkspace -scheme ProductionApp` and commit the workspace `Package.resolved` before running the locked CI checks; Renovate does not refresh this workspace lockfile. Auto-merge is disabled. AlertToast currently follows `master` with a locked revision; review branch changes manually. Configuration alone does not install/authorize the Renovate GitHub App: the repository owner must enable this repository in an existing installation, or explicitly install it if absent. Do not grant permissions on their behalf.
 
