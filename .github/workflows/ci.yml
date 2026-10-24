@@ -61,6 +61,8 @@ jobs:
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: ios-diagnostics
+          # .build/ is a dot-directory; upload-artifact v4 skips hidden paths by default.
+          include-hidden-files: true
           path: |
             .build/*.log
             .build/Tests.xcresult
