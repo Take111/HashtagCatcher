@@ -9,6 +9,7 @@ import Foundation
 import Combine
 import Dependencies
 import Models
+import UseCases
 
 final class GroupEditViewModel: ObservableObject {
     @Published var groupName: String = ""

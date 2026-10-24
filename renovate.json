@@ -1,0 +1,55 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":pinDigests"
+  ],
+  "enabledManagers": [
+    "swift",
+    "github-actions"
+  ],
+  "timezone": "Asia/Tokyo",
+  "schedule": [
+    "* 0-8 * * 1"
+  ],
+  "prHourlyLimit": 2,
+  "prConcurrentLimit": 5,
+  "minimumReleaseAge": "3 days",
+  "automerge": false,
+  "packageRules": [
+    {
+      "matchManagers": [
+        "swift"
+      ],
+      "rangeStrategy": "bump",
+      "prBodyNotes": [
+        "Before CI: run `xcodebuild -resolvePackageDependencies -workspace HashtagCatcher.xcworkspace -scheme ProductionApp` and commit `HashtagCatcher.xcworkspace/xcshareddata/swiftpm/Package.resolved`."
+      ]
+    },
+    {
+      "matchManagers": [
+        "swift"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "groupName": "Swift non-major dependencies"
+    },
+    {
+      "matchManagers": [
+        "github-actions"
+      ],
+      "groupName": "GitHub Actions"
+    },
+    {
+      "matchManagers": [
+        "swift"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "dependencyDashboardApproval": true
+    }
+  ]
+}
