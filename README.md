@@ -29,4 +29,4 @@ See [AGENTS.md](AGENTS.md) for simulator builds, tests, and dependency maintenan
 
 ## Xcode Cloud
 
-See [manual Xcode Cloud setup](docs/xcode-cloud.md) for repository prerequisites, main-only Manual Start, and App Store Connect permission checks. Cloud configuration and uploads require separate authorization.
+See [manual Xcode Cloud setup](docs/xcode-cloud.md) for repository prerequisites, main-only Manual Start, and App Store Connect permission checks.
