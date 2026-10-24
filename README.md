@@ -26,3 +26,7 @@ AppStore is available [here](https://apps.apple.com/jp/app/%E3%83%8F%E3%83%83%E3
 ## Development
 
 See [AGENTS.md](AGENTS.md) for simulator builds, tests, and dependency maintenance.
+
+## Xcode Cloud
+
+See [manual Xcode Cloud setup](docs/xcode-cloud.md) for repository prerequisites, main-only Manual Start, and App Store Connect permission checks. Cloud configuration and uploads require separate authorization.
