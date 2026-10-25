@@ -10,7 +10,7 @@ import UIComponents
 
 package struct SettingsView: View {
 
-    private let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String
+    private let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
 
     @State private var viewModel = SettingsViewModel()
 
@@ -18,30 +18,27 @@ package struct SettingsView: View {
 
     package var body: some View {
         NavigationStack {
-            VStack {
-                List {
-                    #if DEBUG
+            List {
+                #if DEBUG
+                Text(verbatim: "Debug version")
+                #endif
+                HStack {
+                    Text("バージョン", bundle: .module)
+                    Spacer()
+                    Text(version ?? "1.0.0")
+                }
+                Button {
+                    viewModel.didTappedReview()
+                } label: {
                     HStack {
-                        Text("Debug version")
-                    }
-                    #endif
-                    HStack {
-                        Text("バージョン")
-                        Spacer()
-                        Text("\(version ?? "1.0.0")")
-                    }
-                    HStack {
-                        Text("アプリのレビューをする")
+                        Text("アプリのレビューをする", bundle: .module)
                         Spacer()
                         Image(systemName: "chevron.right")
                     }
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        viewModel.didTappedReview()
-                    }
                 }
+                .foregroundStyle(.primary)
             }
-            .navigationTitle("設定")
+            .navigationTitle(Text("設定", bundle: .module))
             .navigationBarTitleDisplayMode(.inline)
         }
     }

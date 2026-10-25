@@ -6,11 +6,8 @@
 //
 
 import SwiftUI
-import UIComponents
 
 package struct FindView: View {
-    @State private var isPresentedCilpboard = false
-
     @State private var viewModel = FindViewModel()
 
     package init() {
@@ -19,25 +16,13 @@ package struct FindView: View {
 
     package var body: some View {
         NavigationStack {
-            ZStack(alignment: .bottom) {
-                VStack {
-                    List {
-                        ForEach(0 ..< viewModel.types.count, id: \.self) { num in
-                            HStack {
-                                Text(viewModel.types[num].rawValue)
-                                NavigationLink(
-                                    destination: HashTagListView(hashTagType: viewModel.types[num]),
-                                    label: {
-                                        Text("")
-                                    }
-                                )
-                            }
-                            .frame(height: 56)
-                        }
-                    }
-                }
-                .navigationBarTitleDisplayMode(.inline)
-                .background(Color(UIColor.background))
+            List(viewModel.types, id: \.self) { type in
+                NavigationLink(type.rawValue, value: type)
+                    .frame(height: 56)
+            }
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationDestination(for: HashTagType.self) { type in
+                HashTagListView(hashTagType: type)
             }
         }
     }

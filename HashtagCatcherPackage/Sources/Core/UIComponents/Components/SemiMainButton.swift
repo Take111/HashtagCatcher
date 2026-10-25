@@ -19,19 +19,16 @@ package struct SemiMainButton: View {
     }
 
     package var body: some View {
-        Button(action: {
+        Button {
             handler?()
-        }, label: {
-            HStack {
-                Text(titleText)
-                    .font(.bold(.body)())
-                    .foregroundColor(Color(UIColor.primary))
-            }
-            .frame(width: 240, height: 56)
-        })
-            .background(Color.white)
-            .foregroundColor(.white)
-            .cornerRadius(16.0)
+        } label: {
+            Text(titleText)
+                .font(.body.bold())
+                .foregroundStyle(Color(UIColor.primary))
+                .frame(width: 240, height: 56)
+        }
+        .background(Color.white)
+        .clipShape(RoundedRectangle(cornerRadius: 16.0))
     }
 }
 

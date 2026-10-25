@@ -13,6 +13,7 @@ private let features: [PackageDescription.Target.Dependency] = ["FindFeature", "
 
 let package = Package(
     name: "HashtagCatcherPackage",
+    defaultLocalization: "ja",
     platforms: [
         .iOS(.v17)
     ],
@@ -36,33 +37,46 @@ let package = Package(
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "ProductionApp",
-            dependencies: features,
+            dependencies: ["AppRoot"],
             path: "./Sources/Apps/Production"
         ),
         .target(
             name: "StagingApp",
-            dependencies: features,
+            dependencies: ["AppRoot"],
             path: "./Sources/Apps/Staging"
         ),
         .target(
+            name: "AppRoot",
+            dependencies: features + ["Routing", "UIComponents"],
+            path: "./Sources/Apps/Root",
+            resources: [.process("Localizable.xcstrings")]
+        ),
+        .target(
             name: "FindFeature",
-            dependencies: ["UIComponents", "UseCases", .alertToast],
-            path: "./Sources/Features/Find"
+            dependencies: ["UIComponents", "Routing", "UseCases", .alertToast],
+            path: "./Sources/Features/Find",
+            resources: [.process("Localizable.xcstrings")]
         ),
         .target(
             name: "GroupFeature",
-            dependencies: ["UIComponents", "UseCases", .alertToast],
-            path: "./Sources/Features/Group"
+            dependencies: ["UIComponents", "Routing", "UseCases", .alertToast],
+            path: "./Sources/Features/Group",
+            resources: [.process("Localizable.xcstrings")]
         ),
         .target(
             name: "SettingsFeature",
             dependencies: ["UIComponents", "UseCases"],
-            path: "./Sources/Features/Settings"
+            path: "./Sources/Features/Settings",
+            resources: [.process("Localizable.xcstrings")]
         ),
         .target(
             name: "UIComponents",
             dependencies: [.alertToast],
             path: "./Sources/Core/UIComponents"
+        ),
+        .target(
+            name: "Routing",
+            path: "./Sources/Core/Routing"
         ),
         .target(
             name: "UseCases",
@@ -86,7 +100,7 @@ let package = Package(
         ),
         .testTarget(
             name: "HashtagCatcherPackageTests",
-            dependencies: ["Models", "APIService", "UseCases", "FindFeature", "GroupFeature", .realm, .swiftDependencies]
+            dependencies: ["Models", "APIService", "Routing", "UseCases", "FindFeature", "GroupFeature", .realm, .swiftDependencies]
         )
     ]
 )

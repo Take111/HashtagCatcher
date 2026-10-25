@@ -11,12 +11,10 @@ import Models
 import AlertToast
 
 struct GroupEditView: View {
-    @State private var groupName = ""
-    @State private var hashtags = ""
     @State private var isShowCompleteAlert = false
     @State private var isShowToast = false
 
-    @Environment(\.presentationMode) private var presentationMode
+    @Environment(\.dismiss) private var dismiss
 
     @State private var viewModel: GroupEditViewModel
 
@@ -27,41 +25,25 @@ struct GroupEditView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 24) {
-                Text("グループ名")
-                    .font(.bold(.body)())
-                TextField("", text: $viewModel.groupName)
-                    .frame(width: 300, height: 32)
-                    .overlay(RoundedRectangle(cornerRadius: 8.0)
-                        .stroke(Color.gray))
-                Text("ハッシュタグ")
-                    .font(.bold(.body)())
-                TextEditor(text: $viewModel.hashtags)
-                    .frame(width: 300, height: 200)
-                    .overlay(RoundedRectangle(cornerRadius: 8.0)
-                        .stroke(Color.gray))
-                VStack(spacing: 24) {
-                    MainButton(title: "コピーする") {
-                        viewModel.onTapPasteButton()
-                        isShowToast.toggle()
-                    }
-                    SemiMainButton(title: "変更する") {
-                        viewModel.onTapEditButton()
-                        isShowCompleteAlert.toggle()
+                GroupFormFields(groupName: $viewModel.groupName, hashtags: $viewModel.hashtags)
+                MainButton(title: String(localized: "コピーする", bundle: .module)) {
+                    viewModel.onTapPasteButton()
+                    isShowToast.toggle()
+                }
+                SemiMainButton(title: String(localized: "変更する", bundle: .module)) {
+                    viewModel.onTapEditButton()
+                    isShowCompleteAlert.toggle()
+                }
+                .alert(Text("変更が完了しました", bundle: .module), isPresented: $isShowCompleteAlert) {
+                    Button(String(localized: "OK", bundle: .module)) {
+                        dismiss()
                     }
                 }
-                .alert(isPresented: $isShowCompleteAlert, content: {
-                    Alert(title: Text("変更が完了しました"),
-                          dismissButton: .default(Text("OK"),
-                                                  action: {
-                        print("完了")
-                        presentationMode.wrappedValue.dismiss()
-                    }))
-                })
             }
         }
         .padding()
         .toast(isPresenting: $isShowToast) {
-            AlertToast(displayMode: .hud, type: .regular, title: "コピーしました")
+            AlertToast(displayMode: .hud, type: .regular, title: String(localized: "コピーしました", bundle: .module))
         }
     }
 }

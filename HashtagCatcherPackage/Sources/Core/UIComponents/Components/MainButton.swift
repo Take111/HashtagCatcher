@@ -12,28 +12,27 @@ package struct MainButton: View {
 
     package var handler: (() -> Void)?
 
+    @Environment(\.isEnabled) private var isEnabled
+
     package init(title: String, handler: (() -> Void)? = nil) {
         titleText = title
         self.handler = handler
     }
 
     package var body: some View {
-        Button(action: {
+        Button {
             handler?()
-        }, label: {
-            HStack {
-                Text(titleText)
-                    .font(.bold(.body)())
-            }
-            .frame(width: 240, height: 56)
-        })
-            .background(Color(UIColor.primary))
-            .foregroundColor(.white)
-            .cornerRadius(16.0)
+        } label: {
+            Text(titleText)
+                .font(.body.bold())
+                .frame(width: 240, height: 56)
+        }
+        .background(isEnabled ? Color(UIColor.primary) : Color(UIColor.systemGray3))
+        .foregroundStyle(.white)
+        .clipShape(RoundedRectangle(cornerRadius: 16.0))
     }
 }
 
-#Preview {
+#Preview(traits: .sizeThatFitsLayout) {
     MainButton(title: "保存する")
-        .previewLayout(PreviewLayout.sizeThatFits)
 }

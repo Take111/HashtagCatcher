@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Routing
 import UseCases
 import Dependencies
 
@@ -28,5 +29,10 @@ final class HashTagListViewModel {
 
     func didSelectHashTag(_ hashTag: HashTag) {
         pasteBoardUseCase.pastText(hashTag.title)
+    }
+
+    func groupDraft(for selection: Set<HashTag.ID>) -> GroupDraft {
+        let tags = hashTags.filter { selection.contains($0.id) }.map { "#\($0.title)" }
+        return GroupDraft(name: hashTagType.rawValue, hashtags: tags.joined(separator: " "))
     }
 }

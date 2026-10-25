@@ -1,6 +1,7 @@
 import XCTest
 import Dependencies
 import Models
+import Routing
 import UseCases
 @testable import FindFeature
 @testable import GroupFeature
@@ -92,5 +93,16 @@ final class ViewModelTests: XCTestCase {
 
         viewModel.didSelectHashTag(viewModel.hashTags[0])
         XCTAssertEqual(copied, ["travel"])
+    }
+
+    func testHashTagListViewModelBuildsGroupDraftInListOrder() {
+        let viewModel = HashTagListViewModel(hashTagType: .travel)
+        viewModel.onApper()
+
+        let selection: Set = [viewModel.hashTags[3].id, viewModel.hashTags[0].id]
+        let draft = viewModel.groupDraft(for: selection)
+
+        XCTAssertEqual(draft.name, "旅行")
+        XCTAssertEqual(draft.hashtags, "#travel #海外旅行")
     }
 }
