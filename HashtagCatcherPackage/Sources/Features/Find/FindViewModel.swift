@@ -6,8 +6,9 @@
 //
 
 import Foundation
-import Combine
 
-final class FindViewModel: ObservableObject {
+@MainActor
+@Observable
+final class FindViewModel {
     let types = HashTagType.allCases.map { $0 }
 }

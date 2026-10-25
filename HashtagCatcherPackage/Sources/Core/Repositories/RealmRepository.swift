@@ -26,7 +26,7 @@ package protocol RealmRepository {
     func delete<T: Object>(object: T) throws
 }
 
-final class RealmRepositoryImpl: RealmRepository, ObservableObject {
+final class RealmRepositoryImpl: RealmRepository {
     private let realm: Realm
 
     // swiftlint:disable force_try

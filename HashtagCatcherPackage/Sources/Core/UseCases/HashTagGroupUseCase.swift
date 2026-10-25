@@ -31,6 +31,12 @@ extension HashTagGroupUseCase: DependencyKey {
             }
         )
     }
+
+    package static let testValue = Self(
+        createHashTagGroup: unimplemented("HashTagGroupUseCase.createHashTagGroup"),
+        fetchHashTagGroups: unimplemented("HashTagGroupUseCase.fetchHashTagGroups", placeholder: []),
+        deleteHashTagGroup: unimplemented("HashTagGroupUseCase.deleteHashTagGroup")
+    )
 }
 
 package extension DependencyValues {

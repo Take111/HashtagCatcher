@@ -19,6 +19,10 @@ extension PasteBoardUseCase: DependencyKey {
             UIPasteboard.general.string = text
         }
     )
+
+    package static let testValue = Self(
+        pastText: unimplemented("PasteBoardUseCase.pastText")
+    )
 }
 
 package extension DependencyValues {

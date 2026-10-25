@@ -18,10 +18,10 @@ struct GroupEditView: View {
 
     @Environment(\.presentationMode) private var presentationMode
 
-    @StateObject var viewModel: GroupEditViewModel
+    @State private var viewModel: GroupEditViewModel
 
     init(group: HashTagGroupDoc) {
-        _viewModel = StateObject(wrappedValue: GroupEditViewModel(group: group))
+        _viewModel = State(initialValue: GroupEditViewModel(group: group))
     }
 
     var body: some View {

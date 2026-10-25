@@ -81,11 +81,12 @@ let package = Package(
         ),
         .target(
             name: "APIService",
+            dependencies: [.swiftDependencies],
             path: "./Sources/Core/APIService"
         ),
         .testTarget(
             name: "HashtagCatcherPackageTests",
-            dependencies: ["Models", .realm]
+            dependencies: ["Models", "APIService", "UseCases", "FindFeature", "GroupFeature", .realm, .swiftDependencies]
         )
     ]
 )

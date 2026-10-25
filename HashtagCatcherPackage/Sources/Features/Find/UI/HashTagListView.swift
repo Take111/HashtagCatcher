@@ -10,11 +10,11 @@ import AlertToast
 
 struct HashTagListView: View {
 
-    @StateObject var viewModel: HashTagListViewModel
+    @State private var viewModel: HashTagListViewModel
     @State private var isShowToast = false
 
     init(hashTagType: HashTagType) {
-        _viewModel = StateObject(wrappedValue: HashTagListViewModel(hashTagType: hashTagType))
+        _viewModel = State(initialValue: HashTagListViewModel(hashTagType: hashTagType))
     }
     var body: some View {
         List {

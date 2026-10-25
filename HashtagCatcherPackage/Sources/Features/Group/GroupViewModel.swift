@@ -6,15 +6,17 @@
 //
 
 import Foundation
-import Combine
 import Dependencies
 import UseCases
 import Models
 
-final class GroupViewModel: ObservableObject {
+@MainActor
+@Observable
+final class GroupViewModel {
 
+    @ObservationIgnored
     @Dependency(\.hashTagGroupUseCase) private var useCase
-    @Published private(set) var groups = [HashTagGroupDoc]()
+    private(set) var groups = [HashTagGroupDoc]()
 
     func onAppear() {
         groups = []
