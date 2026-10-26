@@ -302,7 +302,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "ハッシュタグ管理手帳- ワンタップでハッシュタグを管理 -";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
-				INFOPLIST_KEY_NSUserTrackingUsageDescription = "今後導入予定の広告で、興味・関心に合った広告の表示に利用するため、トラッキングの許可をお願いします。許可しなくてもすべての機能を利用できます。";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "興味・関心に合った広告の表示に利用するため、トラッキングの許可をお願いします。許可しなくてもすべての機能を利用できます。";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -344,7 +344,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "ハッシュタグ管理手帳- ワンタップでハッシュタグを管理 -";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
-				INFOPLIST_KEY_NSUserTrackingUsageDescription = "今後導入予定の広告で、興味・関心に合った広告の表示に利用するため、トラッキングの許可をお願いします。許可しなくてもすべての機能を利用できます。";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "興味・関心に合った広告の表示に利用するため、トラッキングの許可をお願いします。許可しなくてもすべての機能を利用できます。";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
