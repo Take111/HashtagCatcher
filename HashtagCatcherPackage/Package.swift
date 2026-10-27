@@ -100,7 +100,7 @@ let package = Package(
         ),
         .testTarget(
             name: "HashtagCatcherPackageTests",
-            dependencies: ["Models", "APIService", "Routing", "UseCases", "FindFeature", "GroupFeature", .realm, .swiftDependencies]
+            dependencies: ["AppRoot", "Models", "APIService", "Routing", "UseCases", "FindFeature", "GroupFeature", .realm, .swiftDependencies]
         )
     ]
 )

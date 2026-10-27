@@ -12,12 +12,15 @@ import Routing
 
 package struct GroupView: View {
 
+    private let onHomeVisibilityChange: (Bool) -> Void
+
     @Binding private var createDraft: GroupDraft?
 
     @State private var viewModel = GroupViewModel()
 
-    package init(createDraft: Binding<GroupDraft?>) {
+    package init(createDraft: Binding<GroupDraft?>, onHomeVisibilityChange: @escaping (Bool) -> Void = { _ in }) {
         _createDraft = createDraft
+        self.onHomeVisibilityChange = onHomeVisibilityChange
     }
 
     package var body: some View {
@@ -62,6 +65,10 @@ package struct GroupView: View {
             // Inside the stack so returning from the edit screen reloads renamed groups.
             .onAppear {
                 viewModel.onAppear()
+                onHomeVisibilityChange(true)
+            }
+            .onDisappear {
+                onHomeVisibilityChange(false)
             }
         }
         .fullScreenCover(item: $createDraft) { draft in

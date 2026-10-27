@@ -11,6 +11,10 @@ package struct AppRootView: View {
         case find, group, settings
     }
 
+    @Environment(\.scenePhase) private var scenePhase
+    @State private var trackingPermission = TrackingPermissionController()
+    @State private var isGroupHomeVisible = false
+
     @State private var selection = Tab.group
     @State private var groupDraft: GroupDraft?
 
@@ -23,7 +27,7 @@ package struct AppRootView: View {
                     Label(String(localized: "探す", bundle: .module), systemImage: "magnifyingglass")
                 }
                 .tag(Tab.find)
-            GroupView(createDraft: $groupDraft)
+            GroupView(createDraft: $groupDraft, onHomeVisibilityChange: { isGroupHomeVisible = $0 })
                 .tabItem {
                     Label(String(localized: "グループ", bundle: .module), systemImage: "person.3")
                 }
@@ -35,6 +39,12 @@ package struct AppRootView: View {
                 .tag(Tab.settings)
         }
         .tint(Color(UIColor.primary))
+        .onChange(of: isHomeVisible, initial: true) { _, _ in
+            updateTrackingPermission()
+        }
+        .onChange(of: scenePhase) { _, _ in
+            updateTrackingPermission()
+        }
         .environment(\.route, RouteAction { route in
             switch route {
             case let .createGroup(draft):
@@ -42,6 +52,14 @@ package struct AppRootView: View {
                 groupDraft = draft
             }
         })
+    }
+
+    private var isHomeVisible: Bool {
+        selection == .group && isGroupHomeVisible && groupDraft == nil
+    }
+
+    private func updateTrackingPermission() {
+        trackingPermission.update(isHomeVisible: isHomeVisible, isSceneActive: scenePhase == .active)
     }
 }
 
